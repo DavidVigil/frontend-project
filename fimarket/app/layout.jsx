@@ -1,4 +1,7 @@
+import { Css } from "@mui/icons-material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import localFont from "next/font/local";
+import { theme } from "./styles/global-theme";
 //import "./globals.css";
 
 const geistSans = localFont({
@@ -23,7 +26,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
