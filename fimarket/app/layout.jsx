@@ -1,7 +1,8 @@
-import { Css } from "@mui/icons-material";
+// import { Css } from "@mui/icons-material";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import localFont from "next/font/local";
 import { theme } from "./styles/global-theme";
+import AppBarGlobal from "./components/appbar-global";
 //import "./globals.css";
 
 //Footer import
@@ -31,6 +32,8 @@ export default function RootLayout({ children }) {
       >
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          {/* To add the bar navigator */}
+          <AppBarGlobal></AppBarGlobal>
           {children}
           <Footer/>
         </ThemeProvider>
