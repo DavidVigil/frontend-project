@@ -30,7 +30,7 @@ return (
         {/* Logo */}
         <Grid item xs={12} md={2}>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                <img src="http://localhost:3000/LOGO-01.png" alt="Logo" style={{ width: '150px' }} />
+                <img src="/logo.png" alt="Logo" style={{ width: '150px' }} />
             </Typography>
         </Grid>
 
