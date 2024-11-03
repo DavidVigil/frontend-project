@@ -3,14 +3,13 @@
 import { useState } from 'react';
 import { TextField, Button, Typography, Container, Box } from "@mui/material";
 
+
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Abre una nueva ventana y escribe el mensaje "Iniciaste sesión"
         const newWindow = window.open('', '_blank');
         if (newWindow) {
             newWindow.document.write('<h1>Iniciaste sesión</h1>');
@@ -28,8 +27,7 @@ const SignIn = () => {
 
             if (res.ok) {
                 const data = await res.json();
-                console.log(data.message); // Muestra el mensaje de respuesta
-                // Opcional: reiniciar los campos del formulario
+                console.log(data.message);
                 setEmail('');
                 setPassword('');
             } else {
@@ -41,46 +39,79 @@ const SignIn = () => {
     };
 
     return (
-        <Container maxWidth="sm">
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    backgroundColor: 'background.default',
-                    padding: 4,
-                    borderRadius: 2,
-                    boxShadow: 3,
-                }}
-            >
-                <Typography variant="h2" sx={{ color: 'text.title', marginBottom: 2 }}>
-                    Iniciar Sesión
-                </Typography>
-                <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-                    <TextField
-                        label="Correo electrónico"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        fullWidth
-                        required
-                        margin="normal"
-                    />
-                    <TextField
-                        label="Contraseña"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        fullWidth
-                        required
-                        margin="normal"
-                    />
-                    <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
-                        Iniciar sesión
-                    </Button>
-                </form>
-            </Box>
-        </Container>
+        <Box
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '100vh',
+            }}
+        >
+            <Container maxWidth="sm">
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        backgroundColor: 'secondary.main',
+                        padding: 4,
+                        borderRadius: 2,
+                        boxShadow: 3,
+                    }}
+                >
+                    <Typography variant="h1" sx={{ color: 'text.h1', marginBottom: 2 }}>
+                        Sign In
+                    </Typography>
+                    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                        <TextField
+                            label="Email"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            fullWidth
+                            required
+                            margin="normal"
+                            sx={{
+                                color: 'text.dark', 
+                                '& .MuiInputLabel-root': {
+                                    color: 'text.dark', 
+                                },
+                                '& .MuiInputLabel-root.Mui-focused': {
+                                    color: 'text.dark', 
+                                },
+                                '& .MuiInputBase-input': {
+                                    color: 'text.dark', 
+                                },
+                            }}
+                        />
+                        <TextField
+                            label="Password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            fullWidth
+                            required
+                            margin="normal"
+                            sx={{
+                                color: 'text.dark', 
+                                '& .MuiInputLabel-root': {
+                                    color: 'text.dark', 
+                                },
+                                '& .MuiInputLabel-root.Mui-focused': {
+                                    color: 'text.dark', 
+                                },
+                                '& .MuiInputBase-input': {
+                                    color: 'text.dark', 
+                                },
+                            }}
+                        />
+                        <Button type="submit" variant="contained" color="secondary" fullWidth sx={{ mt: 2 }}>
+                            Login
+                        </Button>
+                    </form>
+                </Box>
+            </Container>
+        </Box>
     );
 };
 
