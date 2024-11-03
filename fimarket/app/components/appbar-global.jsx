@@ -81,7 +81,7 @@ export default function AppBarGlobal(){
                     (
                         <>
                             <Button color="inherit" sx={{ mr: 1}} onClick={handleSignIn}>Sign In</Button>
-                            <Button color="secondary" variant= "contained" onClick={handleSignIn}>Sign Up</Button>
+                            <Button color="primary" variant= "contained" onClick={handleSignIn}>Sign Up</Button>
                         </>
                     )
                 }
