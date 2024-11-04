@@ -2,19 +2,30 @@
 
 import { useState } from 'react';
 import { TextField, Button, Typography, Container, Box } from "@mui/material";
-
+import GoogleIcon from '@mui/icons-material/Google';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import { useRouter } from "next/navigation"; 
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const router = useRouter();
+
     const handleSubmit = async (e) => {
+        router.push("/myApps");
+        /*
         e.preventDefault();
         const newWindow = window.open('', '_blank');
         if (newWindow) {
             newWindow.document.write('<h1>Iniciaste sesión</h1>');
             newWindow.document.title = "Mensaje de inicio de sesión";
         }
+        */
+    };
+
+    const handleSU = () => { // Function to signUp
+        router.push("/signUp");
     };
 
     return (
@@ -88,6 +99,42 @@ const SignIn = () => {
                             Login
                         </Button>
                     </form>
+                    <Button
+                        variant='outlined'
+                        fullWidth
+                        startIcon={<GoogleIcon />}
+                        sx={{ mt: 2, mb: 1 }}
+                    >
+                        Sign in with Google
+                    </Button>
+
+                    <Button
+                        variant='outlined'
+                        fullWidth
+                        startIcon={<FacebookIcon />}
+                        sx={{ mb: 1 }}
+                    >
+                        Sign in with Facebook
+                    </Button>
+
+                    <Box sx={{ mt: 2, textAlign: 'center' }}>
+                        <Typography variant='h6' align='center'>
+                            Don't have an account?
+                        </Typography>
+                        <Typography
+                            variant='h6'
+                            color='primary'
+                            sx={{
+                                cursor: 'pointer',
+                                '&:hover': {
+                                    color: 'black',
+                                },
+                            }}
+                            onClick={handleSU}
+                        >
+                            Sign up
+                        </Typography>
+                    </Box>
                 </Box>
             </Container>
         </Box>
