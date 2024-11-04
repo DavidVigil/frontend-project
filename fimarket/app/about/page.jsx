@@ -94,14 +94,16 @@ export default function About() {
 
             <Grid size={{ xs: 12, sm: 6, md: 3 }} sx={{
                 mt: 5,
-                maxWidth: "80%",
+                maxWidth: "50%",
                 mx: "auto",
                 borderRadius: 2,
                 boxShadow: 3,
                 p: 2,
                 backgroundColor: "#cc0000"
-            }}>
-                <Typography variant="h1" sx={{ color: "#ffffff", fontWeight: "bold" }}>Our history</Typography>
+            }}> 
+                <Typography variant="h1" sx={{ color: "#ffffff", fontWeight: "bold" }}>
+                    Our history
+                </Typography>
                 <Typography variant="body1" sx={{ mt: 2, color: "#ffffff" }}>
                     Fimarket was born from the initiative of a group of UNAM students who recognized 
                     the talent and innovation present in their community. Since our inception in 2024, 
@@ -115,38 +117,28 @@ export default function About() {
 
             <Box maxWidth="xl" sx={{
                 mt: 5,
-                width: "90vw",
+                maxWidth: "90%",
                 mb: 3,
                 borderRadius: 2,
                 boxShadow: 3,
                 backgroundColor: "#cc0000"
             }}>
-                <Typography variant="h3" sx={{ mt: 1, color: "#ffffff", fontWeight: "bold", mb: 2 }}>Our Essence</Typography>
+                <Typography variant="h3" sx={{ mt: 1, color: "#ffffff", fontWeight: "bold", mb: 2 }}>
+                    Our Essence
+                </Typography>
                 
                 <Accordion sx={{ "&.Mui-expanded": { backgroundColor: "#fffff" } }}>
                     <AccordionSummary expandIcon={<ArrowDropDownIcon fontSize="large"/>}>
-                        <Typography variant="h4" sx={{ color: "black", fontWeight: "bold" }}>Mission</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography variant="body1" sx={{ color: "#4E342E" }}>
-                        To promote innovation and creativity within the UNAM community by providing a platform that showcases 
-                        applications developed by students, alumni, and faculty. We aim to give visibility to these projects, 
-                        ensuring that their positive impact reaches a broader audience while fostering collaboration and the 
-                        exchange of ideas.
+                        <Typography variant="h4" sx={{ color: "black", fontWeight: "bold" }}>
+                            Mission
                         </Typography>
-                    </AccordionDetails>
-                </Accordion>
-
-                <Accordion sx={{ "&.Mui-expanded": { backgroundColor: "#ffffff" } }}>
-                    <AccordionSummary expandIcon={<ArrowDropDownIcon fontSize="large" />}>
-                        <Typography variant="h4" sx={{ color: "black", fontWeight: "bold" }}>Vision</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography variant="body1" sx={{ color: "#4E342E" }}>
-                        To be the leading platform for promoting innovative applications within the university community, 
-                        strengthening the digital ecosystem of UNAM and contributing to the development of an environment 
-                        that inspires entrepreneurship and creativity. We aspire to become a benchmark for technological 
-                        and social collaboration that enhances the talent of our members.
+                            To promote innovation and creativity within the UNAM community by providing a platform that showcases 
+                            applications developed by students, alumni, and faculty. We aim to give visibility to these projects, 
+                            ensuring that their positive impact reaches a broader audience while fostering collaboration and the 
+                            exchange of ideas.
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
@@ -154,7 +146,23 @@ export default function About() {
                 <Accordion sx={{ "&.Mui-expanded": { backgroundColor: "#ffffff" } }}>
                     <AccordionSummary expandIcon={<ArrowDropDownIcon fontSize="large" />}>
                         <Typography variant="h4" sx={{ color: "black", fontWeight: "bold" }}>
-                        Values
+                            Vision
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography variant="body1" sx={{ color: "#4E342E" }}>
+                            To be the leading platform for promoting innovative applications within the university community, 
+                            strengthening the digital ecosystem of UNAM and contributing to the development of an environment 
+                            that inspires entrepreneurship and creativity. We aspire to become a benchmark for technological 
+                            and social collaboration that enhances the talent of our members.
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
+
+                <Accordion sx={{ "&.Mui-expanded": { backgroundColor: "#ffffff" } }}>
+                    <AccordionSummary expandIcon={<ArrowDropDownIcon fontSize="large" />}>
+                        <Typography variant="h4" sx={{ color: "black", fontWeight: "bold" }}>
+                            Values
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails sx={{ padding: 2 }}>
@@ -244,9 +252,7 @@ export default function About() {
                         </Box>
                     </AccordionDetails>
                 </Accordion>
-
             </Box>
-
         </Box>
     );
 }
