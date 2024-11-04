@@ -37,14 +37,14 @@ return (
         {/* Link Section */}
         <Grid item xs={12} md={2}>
             <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Market Inc</Typography>
-            <Link href="#" color="inherit" underline="hover" display="block">Main Menu</Link>        </Grid>
+            <Link href="/" color="inherit" underline="hover" display="block">Main Menu</Link>        </Grid>
         <Grid item xs={12} md={2}>
             <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Account</Typography>
-            <Link href="#" color="inherit" underline="hover" display="block">Sing in</Link>
+            <Link href="/SignIn" color="inherit" underline="hover" display="block">Sing in</Link>
         </Grid>
         <Grid item xs={12} md={2}>
             <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Apps</Typography>
-            <Link href="#" color="inherit" underline="hover" display="block">Favorites</Link>
+            <Link href="/myApps" color="inherit" underline="hover" display="block">Favorites</Link>
         </Grid>
 
         {/* News letter section */}
@@ -107,6 +107,7 @@ return (
         <Grid item xs={12} md={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <IconButton
             color="secondary"
+            href="https://facebook.com/"
             sx={{
             "&:hover": {
                 backgroundColor: "#e3f2fd",
@@ -119,22 +120,26 @@ return (
             <FacebookIcon />
         </IconButton>
 
-        <IconButton
-        color="secondary"
-        sx={{
-            "&:hover": {
-            backgroundColor: "#e3f2fd",
-            color: "#1DA1F2",
-            transform: "scale(1.2)",
-            transition: "transform 0.3s ease-in-out",
-            },
-        }}
-        >
-            <TwitterIcon />
-        </IconButton>
+
+            <IconButton
+            href="https://twitter.com/"
+                color="secondary"
+                sx={{
+                    "&:hover": {
+                        backgroundColor: "#e3f2fd",
+                        color: "#1DA1F2",
+                        transform: "scale(1.2)",
+                        transition: "transform 0.3s ease-in-out",
+                    },
+                }}
+            >
+                <TwitterIcon />
+            </IconButton>
+
 
         <IconButton
         color="secondary"
+        href="https://mx.linkedin.com/"
         sx={{
             "&:hover": {
             backgroundColor: "#e3f2fd",
@@ -149,6 +154,7 @@ return (
 
         <IconButton
         color="secondary"
+        href="https://youtube.com/"
         sx={{
             "&:hover": {
             backgroundColor: "#e3f2fd",
