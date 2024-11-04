@@ -5,11 +5,11 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import SchoolIcon from '@mui/icons-material/School'; 
-import GroupIcon from '@mui/icons-material/Group'; 
-import PeopleIcon from '@mui/icons-material/People'; 
-import StarIcon from '@mui/icons-material/Star'; 
-import FlagIcon from '@mui/icons-material/Flag'; 
+import SchoolIcon from "@mui/icons-material/School"; 
+import GroupIcon from "@mui/icons-material/Group"; 
+import PeopleIcon from "@mui/icons-material/People"; 
+import StarIcon from "@mui/icons-material/Star"; 
+import FlagIcon from "@mui/icons-material/Flag"; 
 
 export default function About() {
     return (
@@ -39,7 +39,11 @@ export default function About() {
                 mt: 2,
                 borderRadius: 2,
                 boxShadow: 3,
-                p: 2
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent:"center",
+                alignItems:"center",
             }}>
                 <Typography variant="h1" sx={{ color: "#cc0000", fontWeight: "bold" }}>
                     Fimarket
@@ -123,7 +127,7 @@ export default function About() {
                 boxShadow: 3,
                 backgroundColor: "#cc0000"
             }}>
-                <Typography variant="h3" sx={{ mt: 1, color: "#ffffff", fontWeight: "bold", mb: 2 }}>
+                <Typography variant="h3" sx={{ padding:2, color: "#ffffff", fontWeight: "bold"}}>
                     Our Essence
                 </Typography>
                 
@@ -170,11 +174,11 @@ export default function About() {
                             display="flex" 
                             alignItems="center" 
                             sx={{ 
-                                border: '1px solid #000000', 
+                                border: "1px solid #000000", 
                                 borderRadius: 4, 
                                 padding: 3, 
                                 mb: 2, 
-                                backgroundColor: '#cc0000'
+                                backgroundColor: "#cc0000"
                             }}
                         >
                             <SchoolIcon sx={{ mr: 2, color: "#ffffff" }} />
@@ -187,11 +191,11 @@ export default function About() {
                             display="flex" 
                             alignItems="center" 
                             sx={{ 
-                                border: '1px solid #000000', 
+                                border: "1px solid #000000", 
                                 borderRadius: 4, 
                                 padding: 3, 
                                 mb: 2, 
-                                backgroundColor: '#cc0000'
+                                backgroundColor: "#cc0000"
                             }}
                         >
                             <GroupIcon sx={{ mr: 2, color: "#ffffff" }} />
@@ -204,11 +208,11 @@ export default function About() {
                             display="flex" 
                             alignItems="center" 
                             sx={{ 
-                                border: '1px solid #000000', 
+                                border: "1px solid #000000", 
                                 borderRadius: 4, 
                                 padding: 3, 
                                 mb: 2, 
-                                backgroundColor: '#cc0000'
+                                backgroundColor: "#cc0000"
                             }}
                         >
                             <PeopleIcon sx={{ mr: 2, color: "#ffffff" }} />
@@ -221,16 +225,16 @@ export default function About() {
                             display="flex" 
                             alignItems="center" 
                             sx={{ 
-                                border: '1px solid #000000', 
+                                border: "1px solid #000000", 
                                 borderRadius: 4, 
                                 padding: 3, 
                                 mb: 2, 
-                                backgroundColor: '#cc0000'
+                                backgroundColor: "#cc0000"
                             }}
                         >
                             <FlagIcon sx={{ mr: 2, color: "#ffffff" }} />
                             <Typography variant="body1" sx={{ color: "#ffffff" }}>
-                                Social Impact: We are committed to promoting projects that generate a positive impact on society and improve people's quality of life.
+                                Social Impact: We are committed to promoting projects that generate a positive impact on society and improve people"s quality of life.
                             </Typography>
                         </Box>
 
@@ -238,11 +242,11 @@ export default function About() {
                             display="flex" 
                             alignItems="center" 
                             sx={{ 
-                                border: '1px solid #000000', 
+                                border: "1px solid #000000", 
                                 borderRadius: 4, 
                                 padding: 3, 
                                 mb: 2, 
-                                backgroundColor: '#cc0000'
+                                backgroundColor: "#cc0000"
                             }}
                         >
                             <StarIcon sx={{ mr: 2, color: "#ffffff" }} />
