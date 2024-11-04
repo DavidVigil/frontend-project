@@ -15,27 +15,6 @@ const SignIn = () => {
             newWindow.document.write('<h1>Iniciaste sesión</h1>');
             newWindow.document.title = "Mensaje de inicio de sesión";
         }
-
-        try {
-            const res = await fetch('/api/saveUser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (res.ok) {
-                const data = await res.json();
-                console.log(data.message);
-                setEmail('');
-                setPassword('');
-            } else {
-                console.error('Error al guardar los datos:', res.statusText);
-            }
-        } catch (error) {
-            console.error('Error en la solicitud:', error);
-        }
     };
 
     return (
