@@ -39,7 +39,11 @@ export default function About() {
                 mt: 2,
                 borderRadius: 2,
                 boxShadow: 3,
-                p: 2
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent:"center",
+                alignItems:"center",
             }}>
                 <Typography variant="h1" sx={{ color: "#cc0000", fontWeight: "bold" }}>
                     Fimarket
@@ -123,7 +127,7 @@ export default function About() {
                 boxShadow: 3,
                 backgroundColor: "#cc0000"
             }}>
-                <Typography variant="h3" sx={{ mt: 1, color: "#ffffff", fontWeight: "bold", mb: 2 }}>
+                <Typography variant="h3" sx={{ padding:2, color: "#ffffff", fontWeight: "bold"}}>
                     Our Essence
                 </Typography>
                 
