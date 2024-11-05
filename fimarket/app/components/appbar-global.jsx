@@ -3,7 +3,7 @@
 import { AppBar, Box, Button, Tab, Tabs, Toolbar, Typography } from "@mui/material"; // Components from material UI
 import Image from "next/image"; // Image component from next
 import { useRouter } from "next/navigation"; // To move between tabs
-import { useState } from "react"; // To manage states
+import { useEffect, useState } from "react"; // To manage states
 
 export default function AppBarGlobal(){
 
@@ -11,7 +11,23 @@ export default function AppBarGlobal(){
 
     const [value, setValue] = useState(false); // State to track active tab, default is false for "Home"
     const [isAuthenticated, setIsAuthenticated] = useState(false); // To know if i'm in or out of my account
-
+    
+    useEffect(() => {
+        // Function to handle changes in the authentication status stored in localStorage
+        const handleStorageChange = () => {
+            // Check if the user is authenticated based on the localStorage value
+            const authStatus = localStorage.getItem("isAuthenticated") === "true";
+            // Update the local state with the authentication status
+            setIsAuthenticated(authStatus);
+        };
+    
+        // Listen for any changes in the storage (e.g., when authentication status is updated)
+        window.addEventListener("storage", handleStorageChange);
+    
+        // Cleanup function to remove the event listener when the component unmounts
+        return () => window.removeEventListener("storage", handleStorageChange);
+    }, []);
+    
     const handleChange = (newValue) => { // Function to handle changes (clics on tabs)
         setValue(newValue);
     };
@@ -29,11 +45,6 @@ export default function AppBarGlobal(){
     const goToMyApps = () => { // To go to my apps page
         setValue(1); // To highlight this tab
         router.push("/myApps");
-    };
-
-    const handleSignIn = () => { // Function to enter the session when you are outside
-        setIsAuthenticated(true);
-        setValue(false); // To remove the highlight
     };
 
     const handleSignOut = () => { // Function to exit the session when you are inside 
@@ -98,13 +109,14 @@ export default function AppBarGlobal(){
                     // If wer'e out:
                     (
                         <>
-                            <Button color="inherit" sx={{ mr: 1, whiteSpace: "nowrap"}} onClick={handleSignIn}>Sign In</Button>
-                            <Button color="primary" sx={{ whiteSpace: "nowrap"}} variant= "contained" onClick={handleSignIn}>Sign Up</Button>
+                            <Button href="/signIn" color="inherit" sx={{ mr: 1, whiteSpace: "nowrap"}}>Sign In</Button>
+                            <Button href="/signUp" color="primary" sx={{ whiteSpace: "nowrap"}} variant= "contained">Sign Up</Button>
                         </>
                     )
                 }
             
             </Toolbar>
         </AppBar>
-    )
+
+    );
 }
