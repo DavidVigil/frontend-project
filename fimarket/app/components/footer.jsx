@@ -40,7 +40,7 @@ return (
             <Link href="/" color="inherit" underline="hover" display="block">Main Menu</Link>        </Grid>
         <Grid item xs={12} md={2}>
             <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Account</Typography>
-            <Link href="/SignIn" color="inherit" underline="hover" display="block">Sing in</Link>
+            <Link href="/signIn" color="inherit" underline="hover" display="block">Sing in</Link>
         </Grid>
         <Grid item xs={12} md={2}>
             <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>Apps</Typography>
