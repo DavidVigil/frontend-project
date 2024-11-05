@@ -6,23 +6,25 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { useRouter } from "next/navigation"; 
 
-const SignIn = () => {
+const SignIn = ({ onSignIn }) => { // Receive onSignIn as a prop
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const router = useRouter();
 
-    const handleSubmit = async (e) => {
-        router.push("/myApps");
-        /*
+    const handleSubmit = (e) => {
+        // Prevent the default form submission behavior
         e.preventDefault();
-        const newWindow = window.open('', '_blank');
-        if (newWindow) {
-            newWindow.document.write('<h1>Iniciaste sesión</h1>');
-            newWindow.document.title = "Mensaje de inicio de sesión";
-        }
-        */
-    };
+    
+        // Set the authentication status to true in localStorage
+        localStorage.setItem("isAuthenticated", "true");
+    
+        // Dispatch a storage event to notify other components (like AppBarGlobal)
+        // that the authentication status has changed
+        window.dispatchEvent(new Event("storage"));
+    
+        // Redirect the user to the home page after successful login
+        router.push("/");
+    }
 
     const handleSU = () => {
         router.push("/signUp");

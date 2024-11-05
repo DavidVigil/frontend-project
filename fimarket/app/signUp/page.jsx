@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { Link } from "next/navigation"; // To move SignUp
 import { useRouter } from "next/navigation"; // To move between tabs
 
 
@@ -31,6 +30,21 @@ export default function signUp() {
 
   const handleSI = () => { // Function to signUp
     router.push("/signIn");
+  };
+
+  const handleSubmit = (e) => {
+    // Prevent the default form submission
+    e.preventDefault();
+
+    // Set authentication status to true in localStorage
+    localStorage.setItem("isAuthenticated", "true");
+
+    // Dispatch a storage event to notify other components (like AppBarGlobal)
+    // that the authentication status has changed
+    window.dispatchEvent(new Event("storage"));
+
+    // Redirect the user to the home page after successful sign-up
+    router.push("/");
   };
 
   return (
@@ -99,41 +113,43 @@ export default function signUp() {
               <Typography variant='h2' gutterBottom>
                 Sign Up
               </Typography>
-              <TextField
-                label={<Typography variant='h6'>EMAIL</Typography>}
-                fullWidth
-                margin='normal'
-                variant='outlined'
-                sx='primary'
-              />
-              <TextField
-                label={<Typography variant='h6'>PASSWORD</Typography>}
-                type='password'
-                fullWidth
-                margin='normal'
-                variant='outlined'
-              />
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  mt: 1,
-                  mb: 2,
-                }}
-              >
-                <FormControlLabel 
-                  control={<Checkbox color='primary' />} 
-                  label={<Typography color='primary'>Remember me</Typography>} 
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  label={<Typography variant='h6'>EMAIL</Typography>}
+                  fullWidth
+                  margin='normal'
+                  variant='outlined'
+                  sx='primary'
                 />
+                <TextField
+                  label={<Typography variant='h6'>PASSWORD</Typography>}
+                  type='password'
+                  fullWidth
+                  margin='normal'
+                  variant='outlined'
+                />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    mt: 1,
+                    mb: 2,
+                  }}
+                >
+                  <FormControlLabel 
+                    control={<Checkbox color='primary' />} 
+                    label={<Typography color='primary'>Remember me</Typography>} 
+                  />
 
-                <Typography variant='h6' color='primary' sx={{ cursor: 'pointer' }}>
-                  Forgot your password?
-                </Typography>
-              </Box>
-              <Button variant='contained' color='primary' fullWidth>
-                Sign Up
-              </Button>
+                  <Typography variant='h6' color='primary' sx={{ cursor: 'pointer' }}>
+                    Forgot your password?
+                  </Typography>
+                </Box>
+                <Button type="submit" variant='contained' color='primary' fullWidth>
+                  Sign Up
+                </Button>
+              </form>
               <Divider sx={{ my: 2 }}>or</Divider>
               <Button
                 variant='outlined'
