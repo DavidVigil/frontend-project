@@ -59,7 +59,8 @@ export default function AppBarGlobal(){
             sx={{ 
                 backgroundColor: "#121214", // Black
                 color: "secondary", // White
-                minHeight: "64px" // To maintain the height of the bar on all screens
+                minHeight: "64px", // To maintain the height of the bar on all screens
+                mb: 20 // Space at the bottom
             }}
         >
             <Toolbar sx={{ minHeight: "64px" }}> {/* Ensures consistent height */}

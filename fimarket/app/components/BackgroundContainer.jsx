@@ -1,19 +1,20 @@
-'use client';
 import React from 'react';
 import { Box, Container } from '@mui/material';
+import BackgroundAvatars from './BackgroundAvatars';
 
 const BackgroundContainer = ({ children }) => {
   return (
     <Box
       sx={{
-        background: `url('/assets/floating.gif') no-repeat center center fixed`,
-        backgroundSize: 'cover',
-        height: '100vh',
+        position: 'relative',
+        height: 'auto',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        background: 'rgba(0, 0, 0, 0.5)'
       }}
     >
+      <BackgroundAvatars />
       <Container
         maxWidth="md"
         sx={{
@@ -25,6 +26,7 @@ const BackgroundContainer = ({ children }) => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          zIndex: 2
         }}
       >
         {children}
