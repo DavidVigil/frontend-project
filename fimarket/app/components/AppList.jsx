@@ -72,6 +72,7 @@ const AppList = ({ searchTerm, filterDialogOpen, setFilterDialogOpen }) => {
                         sx = {{ color: 'text.dark' }}
                         onClick={() => setSaveDialogOpen(false)}>Close</Button>
                     <Button 
+                        href='/signIn'
                         sx = {{ color: 'text.dark' }}
                         onClick={() => alert('Redirect to sign-in')}>Sign In</Button>
                 </DialogActions>
