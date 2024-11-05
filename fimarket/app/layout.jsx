@@ -1,8 +1,12 @@
-import { Css } from "@mui/icons-material";
+// import { Css } from "@mui/icons-material";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import localFont from "next/font/local";
 import { theme } from "./styles/global-theme";
+import AppBarGlobal from "./components/appbar-global";
 //import "./globals.css";
+
+//Footer import
+import Footer from "./components/footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +32,10 @@ export default function RootLayout({ children }) {
       >
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          {/* To add the bar navigator */}
+          <AppBarGlobal></AppBarGlobal>
           {children}
+          <Footer/>
         </ThemeProvider>
       </body>
     </html>
