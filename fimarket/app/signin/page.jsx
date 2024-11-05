@@ -24,7 +24,7 @@ const SignIn = () => {
         */
     };
 
-    const handleSU = () => {
+    const handleSU = () => { // Function to signUp
         router.push("/signUp");
     };
 
