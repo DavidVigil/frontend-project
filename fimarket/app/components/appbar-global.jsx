@@ -1,9 +1,9 @@
 "use client";
 
-import { AppBar, Box, Button, Tab, Tabs, Toolbar, Typography } from "@mui/material"; // Components from material ui
+import { AppBar, Box, Button, Tab, Tabs, Toolbar, Typography } from "@mui/material"; // Components from material UI
 import Image from "next/image"; // Image component from next
 import { useRouter } from "next/navigation"; // To move between tabs
-import { useState } from "react"; // To manage states
+import { useEffect, useState } from "react"; // To manage states
 
 export default function AppBarGlobal(){
 
@@ -11,7 +11,23 @@ export default function AppBarGlobal(){
 
     const [value, setValue] = useState(false); // State to track active tab, default is false for "Home"
     const [isAuthenticated, setIsAuthenticated] = useState(false); // To know if i'm in or out of my account
-
+    
+    useEffect(() => {
+        // Function to handle changes in the authentication status stored in localStorage
+        const handleStorageChange = () => {
+            // Check if the user is authenticated based on the localStorage value
+            const authStatus = localStorage.getItem("isAuthenticated") === "true";
+            // Update the local state with the authentication status
+            setIsAuthenticated(authStatus);
+        };
+    
+        // Listen for any changes in the storage (e.g., when authentication status is updated)
+        window.addEventListener("storage", handleStorageChange);
+    
+        // Cleanup function to remove the event listener when the component unmounts
+        return () => window.removeEventListener("storage", handleStorageChange);
+    }, []);
+    
     const handleChange = (newValue) => { // Function to handle changes (clics on tabs)
         setValue(newValue);
     };
@@ -31,11 +47,6 @@ export default function AppBarGlobal(){
         router.push("/myApps");
     };
 
-    const handleSignIn = () => { // Function to enter the session when you are outside
-        setIsAuthenticated(true);
-        setValue(false); // To remove the highlight
-    };
-
     const handleSignOut = () => { // Function to exit the session when you are inside 
         setIsAuthenticated(false);
         setValue(false); // To remove the highlight
@@ -43,17 +54,35 @@ export default function AppBarGlobal(){
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: "#121214", color: "secondary"}}>
-            <Toolbar>
+        <AppBar 
+            position="static" // It doesn't stay visible when scrolling 
+            sx={{ 
+                backgroundColor: "#121214", // Black
+                color: "secondary", // White
+                minHeight: "64px" // To maintain the height of the bar on all screens
+            }}
+        >
+            <Toolbar sx={{ minHeight: "64px" }}> {/* Ensures consistent height */}
 
-                <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer"}} onClick={goToHome}> 
+                <Box 
+                    sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={goToHome} > 
                     <Image
                         src="/logo.png"
-                        alt="FI Market"
+                        alt="FI Marketplace"
                         width={40}
                         height={40}
                     />
-                    <Typography variant="h5" sx={{ textDecoration: "none", color: "inherit", ml: 2, mr: 3}}>
+                    <Typography 
+                        variant="h5" 
+                        sx={{ 
+                            textDecoration: "none", // Remove any decoration
+                            color: "inherit", // Inherits the color of the father
+                            ml: 2, // Space to the left
+                            mr: 3, // Space to the right
+                            display: { xs: "none", sm: "block" }, // Hide on xs, show on sm and up
+                            whiteSpace: "nowrap" // Prevents line break
+                        }}
+                    >
                         FI Marketplace
                     </Typography>
                 </Box>
@@ -61,11 +90,11 @@ export default function AppBarGlobal(){
                 <Tabs
                     value={value} // Initial state
                     onChange={(_, newValue) => handleChange(newValue)} // To manage the clics on the tabs
-                    textColor="inherit"
+                    textColor="inherit" // Inherits the color of the father
                     sx={{ 
                         flexGrow: 1, // To push the following sign buttons to the right
                         "& .MuiTabs-indicator": {
-                            backgroundColor: value === false ? "transparent" : "yellow" // Red highlight unless on Home
+                            backgroundColor: value === false ? "transparent" : "yellow" // Yellow highlight unless on Home
                         }
                     }}
                 >
@@ -80,13 +109,14 @@ export default function AppBarGlobal(){
                     // If wer'e out:
                     (
                         <>
-                            <Button color="inherit" sx={{ mr: 1}} onClick={handleSignIn}>Sign In</Button>
-                            <Button color="primary" variant= "contained" onClick={handleSignIn}>Sign Up</Button>
+                            <Button href="/signIn" color="inherit" sx={{ mr: 1, whiteSpace: "nowrap"}}>Sign In</Button>
+                            <Button href="/signUp" color="primary" sx={{ whiteSpace: "nowrap"}} variant= "contained">Sign Up</Button>
                         </>
                     )
                 }
             
             </Toolbar>
         </AppBar>
-    )
+
+    );
 }
