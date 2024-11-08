@@ -17,7 +17,7 @@ export const theme = createTheme({
         },
         text: {
             main: "#bbbbb",
-            light: "#eeeeee",
+            light: "#ffffff",
             dark: "#000000",
             title: "#ff0000",
             subtitle: "#bb0000",
@@ -29,7 +29,7 @@ export const theme = createTheme({
         h1: {
             fontSize: "3rem",
             fontWeight: "bold",
-            color: "#eeeeee",
+            color: "#ffffff",
         },
         h2: {
             fontSize: "2.5rem",
@@ -49,7 +49,7 @@ export const theme = createTheme({
         h5: {
             fontSize: "1.25rem",
             fontWeight: "bold",
-            color: "#eeeeee",
+            color: "#ffffff",
         },
         h6: {
             fontSize: "1rem",
