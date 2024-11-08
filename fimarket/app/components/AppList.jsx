@@ -49,7 +49,7 @@ const AppList = ({ searchTerm, isAuthenticated, userApps = [], setUserApps, filt
                                     <Button variant="contained" color="primary" fullWidth>Download</Button>
                                 </Link>
                                 <Button
-                                    variant={isAppSaved(app) ? "disabled" : "outlined"}
+                                    variant={isAppSaved(app) ? "disabled" : "contained"}
                                     color="secondary"
                                     fullWidth
                                     onClick={() => handleSaveClick(app)}

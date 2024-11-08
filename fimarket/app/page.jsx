@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CssBaseline, Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import AppList from './components/AppList';
 import SearchBar from './components/SearchBar';
 import BackgroundContainer from './components/BackgroundContainer';
 import { allApps } from './data/apps';
+import { theme } from './styles/global-theme';
+
 
 const Page = () => {
   // BackgroundAvatars.jsx
@@ -30,26 +32,50 @@ const Page = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ pt: 4 }}>
-      <BackgroundContainer>
-        <Box maxWidth sx={{
-          mt: 2,
-          borderRadius: 2,
-          boxShadow: 3,
-          p: 2,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}>
-          <Typography variant="h1" sx={{ color: "#cc0000", fontWeight: "bold" }}>
-            Apps
-          </Typography>
-          <Box sx={{ border: "4px solid #cc0000", width: 250, mb: 1 }} />
-        </Box>
+    <Container maxWidth="lg" sx={{ pt: 4, border: '2px solid blue' }}>
+      <Box sx={{backgroundImage: "url(/header.png)",
+        backgroundSize: 'cover',
+        height: '200px',
+
+        
+      }}>
+        <Typography
+          variant='h1'
+          align='center'
+          sx={{
+            fontSize: '75px',
+            fontWeight: 'none',
+            fontFamily:'Playfair Display',
+            pt:7,
+            textShadow: '2px 2px 4px #000000',
+            }}>
+          FI Market
+        </Typography>
+      </Box>
+      <Box
+        sx={{border:'2px solid #bbbbbb',
+        mt: 2,
+        mb: 2,
+        borderRadius: '2px'
+        }}/>
+      <Box
+        align="center"
+        sx={{border:'2px solid red'}}>
+        <Typography
+          variant="h2"
+          sx={{fontWeight: "bold" }}>
+          Apps
+        </Typography>
+        <Box
+          sx={{
+            border: '3px solid #5C0A23',
+            width: 250,
+            mt: 1,
+            borderRadius: '4px'
+            }}/>
         <Container maxWidth="md" sx={{ pt: 4 }}>
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} onFilterClick={handleFilterClick} />
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{border: '2px solid black', display: 'flex', justifyContent: 'center' }}>
             <AppList
               searchTerm={searchTerm}
               filterDialogOpen={filterDialogOpen}
@@ -62,7 +88,7 @@ const Page = () => {
             />
           </Box>
         </Container>
-      </BackgroundContainer>
+      </Box>
     </Container>
   );
 };
