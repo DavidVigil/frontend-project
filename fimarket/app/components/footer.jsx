@@ -24,7 +24,7 @@ const handleChange = (event) => {
 
 return (
     <Grid component="footer" sx={{mt: 20, bgcolor: 'primary.main'}}>
-        <Box sx={{ padding: '40px 20px', border: '2px solid red'}}>
+        <Box sx={{ padding: '40px 20px'}}>
         <Grid container spacing={4} justifyContent="space-between" alignItems="flex-start">
             {/* Logo */}
             <Grid item xs={12} md={2} align="center">
