@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Box } from '@mui/material';
-import { pseudoApps } from '../data/apps';
+import { allApps, pseudoApps } from '../data/apps';
 import { keyframes } from '@emotion/react';
 
 const getRandomPosition = (max) => Math.floor(Math.random() * max);
@@ -8,18 +8,19 @@ const getRandomSize = () => Math.floor(Math.random() * 100) + 50;
 
 const moveAvatar = keyframes`
   0% {
-    transform: translateY(100vh);
     opacity: 0;
   }
   10% {
-    opacity: 0.3;
+    transform: translateY(-100vh);
+    opacity: 0.7;
   }
   90% {
-    opacity: 0.3;
+    transform: translateY(-300vh);
+    opacity: 0.5;
   }
   100% {
-    transform: translateY(-100vh);
-    opacity: 0;
+    transform: translateY(-800vh);
+    opacity: 0.1;
   }
 `;
 
@@ -41,13 +42,13 @@ const BackgroundAvatars = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const avatarArray = pseudoApps.map((app, index) => ({
+            const avatarArray = allApps.map((app, index) => ({
                 key: index,
                 src: app.logo,
                 style: generateAvatarStyle()
             }));
             setAvatars(avatarArray);
-        }, 2000); // Refrescar cada 5 segundos
+        }, 5000); // Refrescar cada 5 segundos
 
         return () => clearInterval(interval);
     }, []);

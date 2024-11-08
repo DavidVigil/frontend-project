@@ -5,8 +5,12 @@ import { CssBaseline, Box, Container, Typography } from '@mui/material';
 import AppList from './components/AppList';
 import SearchBar from './components/SearchBar';
 import BackgroundContainer from './components/BackgroundContainer';
+import { allApps } from './data/apps';
 
 const Page = () => {
+  // BackgroundAvatars.jsx
+  const [avatars, setAvatars] = useState([]);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -16,10 +20,18 @@ const Page = () => {
     setFilterDialogOpen(true);
   };
 
+  const appDefinition = {
+    title: '',
+    info: '',
+    description: '',
+    logo: '',
+    url: '',
+    source: ''
+  };
+
   return (
-    <Container maxWidth="md" sx={{ pt: 4, mt: 40 }}>
-      <BackgroundContainer sx={{}}>
-        <CssBaseline />
+    <Container maxWidth="md" sx={{ pt: 4 }}>
+      <BackgroundContainer>
         <Box maxWidth sx={{
           mt: 2,
           borderRadius: 2,
@@ -45,6 +57,8 @@ const Page = () => {
               isAuthenticated={isAuthenticated}
               userApps={userApps}
               setUserApps={setUserApps}
+              sortingApps={allApps}
+              appDef={appDefinition}
             />
           </Box>
         </Container>

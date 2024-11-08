@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, List, ListItem, ListItemAvatar, ListItemText, Avatar, Link, Dialog, DialogTitle, DialogContent, DialogActions, Typography, Grid2 } from '@mui/material'; // Importing Grid2 correctly
-import { pseudoApps } from '../data/apps'; // Import pseudoApps
 
-const AppList = ({ searchTerm, isAuthenticated, userApps = [], setUserApps, filterDialogOpen, setFilterDialogOpen }) => { // Default value for userApps and new props
+const AppList = ({ searchTerm, isAuthenticated, userApps = [], setUserApps, filterDialogOpen, setFilterDialogOpen, sortingApps, appDef }) => { // Default value for userApps and new props
     const [saveDialogOpen, setSaveDialogOpen] = useState(false);
     const [filterSource, setFilterSource] = useState('');
 
@@ -24,15 +23,12 @@ const AppList = ({ searchTerm, isAuthenticated, userApps = [], setUserApps, filt
         setFilterDialogOpen(false);
     };
 
-    const isAppSaved = (app) => {
-        // Check if the app is already in the user's saved apps
-        return userApps.some(userApp => userApp.title === app.title); // Use title or another unique attribute
-    };
-
-    const filteredApps = pseudoApps.filter(app =>
+    const filteredApps = sortingApps.filter(app =>
         app.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
         (!filterSource || filterSource === 'All' || app.source === filterSource) // Filtering logic
     );
+
+    const isAppSaved = (app) => userApps.some(userApp => userApp.title === app.title);
 
     return (
         <Box sx={{ width: '100%', bgcolor: 'transparent', backdropFilter: 'blur(5px)', borderRadius: 2, p: 2 }}>
@@ -53,7 +49,7 @@ const AppList = ({ searchTerm, isAuthenticated, userApps = [], setUserApps, filt
                                     <Button variant="contained" color="primary" fullWidth>Download</Button>
                                 </Link>
                                 <Button
-                                    variant={isAppSaved(app) ? "contained" : "outlined"}
+                                    variant={isAppSaved(app) ? "disabled" : "outlined"}
                                     color="secondary"
                                     fullWidth
                                     onClick={() => handleSaveClick(app)}
