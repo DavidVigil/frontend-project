@@ -13,6 +13,7 @@ export const theme = createTheme({
         background: {
             default: "#eeeeee",
             paper: "#ffffff",
+            footer: "#dddddd",
         },
         text: {
             main: "#bbbbb",
@@ -69,6 +70,11 @@ export const theme = createTheme({
             fontSize: "1rem",
             fontWeight: "bold",
             color: "#ffffff",
+        },
+        subtitle1: {
+            fontSize: "1rem",
+            fontWeight: "bold",
+            color: "#eeeeee",
         },
     },
     
