@@ -12,14 +12,13 @@ import { theme } from './styles/global-theme';
 const Page = () => {
   // BackgroundAvatars.jsx
   const [avatars, setAvatars] = useState([]);
-
+  const [filterType, setFilterType] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterDialogOpen, setFilterDialogOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userApps, setUserApps] = useState([]);
-
-  const handleFilterClick = () => {
-    setFilterDialogOpen(true);
+  
+  const handleFilterOption = (source) => {
+    setFilterSource(source);
   };
 
   const appDefinition = {
@@ -32,53 +31,52 @@ const Page = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 4, border: '2px solid blue' }}>
-      <Box sx={{backgroundImage: "url(/banner.jpg)",
+    <Container maxWidth="lg">
+      <Box sx={{
+        backgroundImage: "url(/banner.jpg)",
         backgroundSize: 'cover',
         height: '200px',
-
-        
       }}>
         <Typography
           variant='h1'
           align='center'
           sx={{
-            fontSize: '75px',
-            fontWeight: 'none',
-            fontFamily:'Playfair Display',
-            pt:7,
-            textShadow: '2px 2px 4px #000000',
+              fontSize: '75px',
+              fontWeight: 'none',
+              fontFamily:'Playfair Display',
+              pt:7,
+              textShadow: '2px 2px 4px #000000',
             }}>
           FI Market
         </Typography>
       </Box>
       <Box
-        sx={{border:'2px solid #bbbbbb',
-        mt: 2,
-        mb: 2,
-        borderRadius: '2px'
+        sx={{
+          mt: 2,
+          mb: 2,
         }}/>
-      <Box
-        align="center"
-        sx={{border:'2px solid red'}}>
+      <Box align="center" >
         <Typography
           variant="h2"
           sx={{
-            fontSize: '65px',
-            fontWeight: 'none',
-            pt:1,
-            textShadow: '2px 2px 4px #000000',
+              fontSize: '65px',
+              fontWeight: 'none',
+              pt:1,
+              textShadow: '2px 2px 4px #000000',
             }}>
           Apps
         </Typography>
         <Box/>
         <Container maxWidth="md" sx={{ pt: 4 }}>
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} onFilterClick={handleFilterClick} />
-          <Box sx={{border: '2px solid black', display: 'flex', justifyContent: 'center' }}>
+          <SearchBar 
+            searchTerm={searchTerm} 
+            setSearchTerm={setSearchTerm} 
+            setFilterType={setFilterType}
+          />
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <AppList
               searchTerm={searchTerm}
-              filterDialogOpen={filterDialogOpen}
-              setFilterDialogOpen={setFilterDialogOpen}
+              filterType={filterType}
               isAuthenticated={isAuthenticated}
               userApps={userApps}
               setUserApps={setUserApps}

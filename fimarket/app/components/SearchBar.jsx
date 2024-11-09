@@ -6,7 +6,7 @@ import FilterAltTwoToneIcon from '@mui/icons-material/FilterAltTwoTone';
 
 
 
-const SearchBar = ({ searchTerm, setSearchTerm, onFilterClick }) => {
+const SearchBar = ({ searchTerm, setSearchTerm, setFilterType }) => {
 
     return (
         <Box>
@@ -20,37 +20,35 @@ const SearchBar = ({ searchTerm, setSearchTerm, onFilterClick }) => {
                 <TextField
                     label="Search"
                     sx={{
+                        label: { color: 'text.main' },
                         width: { xs: '100%',sm: '30%' },
                         "& .MuiOutlinedInput-root": {
                             "& .MuiOutlinedInput-notchedOutline": {
-                                borderColor: "primary.main",
+                                borderColor: "primary.dark",
                                 borderWidth: "1px",
-                            },
-                            "& .MuiFormLabel-root.Mui": {
-                                color: 'red'
+                                color: "text.dark",
                             },
                             "&.Mui-focused": {
-                            "& .MuiOutlinedInput-notchedOutline": {
-                                borderColor: "text.main",
-                                borderWidth: "2px",
-                            },
+                                "& .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "text.dark",
+                                    borderWidth: "2px",
+                                },
                             },
                             "&:hover:not(.Mui-focused)": {
-                            "& .MuiOutlinedInput-notchedOutline": {
-                                borderColor: "text.main",
-                            },
+                                "& .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "text.dark",
+                                    borderWidth: "2px",
+                                },
                             },
                             '& .MuiInputBase-input': {
-                            color: 'text.main',
+                                color: 'text.dark',
 
                             },
                         },
-        
                         "& .MuiInputLabel-outlined": {
-        
                             "&.Mui-focused": {
-                            color: "text.main",
-                            fontWeight: "bold",
+                                color: "text.dark",
+                                fontWeight: "bold",
                             },
                         },
                     }}
@@ -62,38 +60,40 @@ const SearchBar = ({ searchTerm, setSearchTerm, onFilterClick }) => {
                 />
                 <Select
                     size="small"
-                    onClick={onFilterClick}
                     displayEmpty
                     inputProps={{'aria-label': 'Without label'}}
                     startAdornment={<FilterAltTwoToneIcon sx={{ marginRight: 1 }} />}
 
                     sx={{ 
                         bgcolor: 'primary.main', 
-                        color: 'text.main', 
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'text.main',   
-                        borderWidth: "1px",
-
-                    },
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'text.main',   
-                        borderWidth: "2px",
-
-                }
+                        color: 'text.light', 
                     }}
-        
                 >    
-
-                <MenuItem>
-                    <em>None</em>
-                </MenuItem> 
-                <MenuItem>ALL</MenuItem>
-                <MenuItem>FI</MenuItem>
-                <MenuItem>EXTERN</MenuItem>
-                
+                    <MenuItem
+                        onClick={() => setFilterType('All')}
+                        sx={{
+                            color: 'text.dark',
+                        }}
+                    >
+                        ALL
+                    </MenuItem>
+                    <MenuItem
+                        onClick={() => setFilterType('FI')}
+                        sx={{
+                            color: 'text.dark',
+                        }}
+                    >
+                        FI
+                    </MenuItem>
+                    <MenuItem
+                        onClick={() => setFilterType('Extern')}
+                        sx={{
+                            color: 'text.dark',
+                        }}
+                    >
+                        EXTERN
+                    </MenuItem>
                 </Select>
-
-
             </Stack>
         </Box>
     );
