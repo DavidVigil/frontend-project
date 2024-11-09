@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
           {/* To add the bar navigator */}
           <AppBarGlobal></AppBarGlobal>
           {children}
-          <Footer/>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
