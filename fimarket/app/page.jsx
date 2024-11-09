@@ -33,7 +33,7 @@ const Page = () => {
 
   return (
     <Container maxWidth="lg" sx={{ pt: 4, border: '2px solid blue' }}>
-      <Box sx={{backgroundImage: "url(/header.png)",
+      <Box sx={{backgroundImage: "url(/banner.jpg)",
         backgroundSize: 'cover',
         height: '200px',
 
@@ -63,16 +63,15 @@ const Page = () => {
         sx={{border:'2px solid red'}}>
         <Typography
           variant="h2"
-          sx={{fontWeight: "bold" }}>
+          sx={{
+            fontSize: '65px',
+            fontWeight: 'none',
+            pt:1,
+            textShadow: '2px 2px 4px #000000',
+            }}>
           Apps
         </Typography>
-        <Box
-          sx={{
-            border: '3px solid #5C0A23',
-            width: 250,
-            mt: 1,
-            borderRadius: '4px'
-            }}/>
+        <Box/>
         <Container maxWidth="md" sx={{ pt: 4 }}>
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} onFilterClick={handleFilterClick} />
           <Box sx={{border: '2px solid black', display: 'flex', justifyContent: 'center' }}>
