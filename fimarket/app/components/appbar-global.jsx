@@ -4,6 +4,7 @@ import { AppBar, Box, Button, Tab, Tabs, Toolbar, Typography } from "@mui/materi
 import Image from "next/image"; // Image component from next
 import { useRouter } from "next/navigation"; // To move between tabs
 import { useEffect, useState } from "react"; // To manage states
+import { theme } from "../styles/global-theme";
 
 export default function AppBarGlobal(){
 
@@ -57,10 +58,9 @@ export default function AppBarGlobal(){
         <AppBar 
             position="static" // It doesn't stay visible when scrolling 
             sx={{ 
-                backgroundColor: "#121214", // Black
                 color: "secondary", // White
                 minHeight: "64px", // To maintain the height of the bar on all screens
-                mb: 20 // Space at the bottom
+                mb: 5 // Space at the bottom
             }}
         >
             <Toolbar sx={{ minHeight: "64px" }}> {/* Ensures consistent height */}
@@ -76,8 +76,6 @@ export default function AppBarGlobal(){
                     <Typography 
                         variant="h5" 
                         sx={{ 
-                            textDecoration: "none", // Remove any decoration
-                            color: "inherit", // Inherits the color of the father
                             ml: 2, // Space to the left
                             mr: 3, // Space to the right
                             display: { xs: "none", sm: "block" }, // Hide on xs, show on sm and up
@@ -95,23 +93,23 @@ export default function AppBarGlobal(){
                     sx={{ 
                         flexGrow: 1, // To push the following sign buttons to the right
                         "& .MuiTabs-indicator": {
-                            backgroundColor: value === false ? "transparent" : "yellow" // Yellow highlight unless on Home
+                            backgroundColor: value === false ? "transparent" : theme.palette.secondary.main // Yellow highlight unless on Home
                         }
                     }}
                 >
                     {/* Changes the color of the letters if the tab is selected or not */}
-                    <Tab label= "About" onClick={goToAbout} sx={{ color: value === 0 ? 'secondary' : '#ffffff' }}/> 
-                    <Tab label= "My Apps" onClick={goToMyApps} sx={{ color: value === 1 ? 'secondary' : '#ffffff' }}/>
+                    <Tab label= "About" onClick={goToAbout} sx={{ color: value === 0 ? theme.palette.text.light : '#ffffff' }}/> 
+                    <Tab label= "My Apps" onClick={goToMyApps} sx={{ color: value === 1 ? theme.palette.text.light : '#ffffff' }}/>
                 </Tabs>
 
                 { isAuthenticated ? // Are we in or out?
-                    (<Button color="inherit" onClick={handleSignOut}>Sign Out</Button>) // If we're in
+                    (<Button color="secondary" onClick={handleSignOut} variant="outlined">Sign Out</Button>) // If we're in
                     :
                     // If wer'e out:
                     (
                         <>
-                            <Button href="/signIn" color="inherit" sx={{ mr: 1, whiteSpace: "nowrap"}}>Sign In</Button>
-                            <Button href="/signUp" color="primary" sx={{ whiteSpace: "nowrap"}} variant= "contained">Sign Up</Button>
+                            <Button href="/signIn" color="secondary" sx={{ mr: 1, whiteSpace: "nowrap"}} variant="outlined">Sign In</Button>
+                            <Button href="/signUp" color="secondary" sx={{ whiteSpace: "nowrap"}} variant= "contained">Sign Up</Button>
                         </>
                     )
                 }
