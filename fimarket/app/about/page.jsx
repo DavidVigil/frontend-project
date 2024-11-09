@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Grid from "@mui/material/Grid2"; 
 import Accordion from "@mui/material/Accordion";
@@ -18,81 +18,79 @@ export default function About() {
             alignItems: "center",
             display: "flex",
             flexDirection: "column",
-            background: "#eeeeee",
         }}>
             <Box sx={{
-                py: 2,
-                backgroundColor: "#cc0000",
-                borderRadius: 2,
-                boxShadow: 3
-            }}>
-                <Image
-                    src="/header.png"
-                    alt="Header image"
-                    height={350}
-                    width={680}
-                    layout="responsive"
-                />
-            </Box>
-
-            <Box maxWidth sx={{
-                mt: 2,
-                borderRadius: 2,
                 boxShadow: 3,
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent:"center",
-                alignItems:"center",
+                backgroundImage: "url('/header.png')",
+                backgroundSize: "cover",
+                height: "200px",
+                width: "100%",
             }}>
-                <Typography variant="h1" sx={{ color: "#cc0000", fontWeight: "bold" }}>
-                    Fimarket
+                <Typography
+                    variant='h1'
+                    align='center'
+                    sx={{
+                        fontSize: '75px',
+                        fontWeight: 'none',
+                        fontFamily:'Playfair Display',
+                        pt:7,
+                        textShadow: '2px 2px 4px #000000',
+                        }}>
+                    About us
                 </Typography>
-                <Box sx={{ border: "4px solid #cc0000", width: 250, mb: 1 }} />
-                
             </Box>
-
-            <Grid container sx={{
-                mt: 2,
-                backgroundColor: "#cc0000",
-                p: 2,
-                borderRadius: 2,
-                boxShadow: 3
-            }} alignItems="center">
-                <Grid size={{ xs: 10, sm: 12, md: 12 }} sx={{ ml:4 }}>
-                    <Typography variant="h1" sx={{ color: "#ffffff", fontWeight: "bold" }}>
-                        About us
-                    </Typography>
-                </Grid>
-                <Grid spacing={5} size={{ xs: 12, sm: 5, md: 5 }} sx={{
+            <Grid
+                container
+                alignItems="center"
+                sx={{
                     mt: 2,
-                    display: "flex",
-                    justifyContent: "center",
-                    borderRadius: 2,
-                }}>
-                    <Image
-                        src="/about.png"
-                        alt="About Us Image"
-                        width={500}
-                        height={350}
-                        style={{ maxWidth: "100%", height: "auto" }}
-                    />
-                </Grid>
-                <Grid spacing={2} size={{ xs: 12, sm: 7, md: 7 }} sx={{
-                    alignItems: "center",
-                    justifyContent: "center",
                     p: 2,
-                    borderRadius: 2,
-                    boxShadow: 2
-                }}>
-                    <Typography variant="body1" textAlign="left" sx={{ color: "#ffffff" }}>
-                        At fimarket, we believe that every application has the potential to create 
-                        a positive impact. Our goal is to ensure that these innovations reach a broader 
-                        audience. Through this platform, we aim to inspire collaboration and the exchange 
-                        of ideas, thereby strengthening the connection between technology and the university 
-                        community. Join us in celebrating creativity and entrepreneurship as we showcase the 
-                        remarkable projects developed by our talented members.
-                    </Typography>
+                }}
+            >
+
+                <Grid
+                    size={{ xs: 12, md: 5 }}
+                    width="100%"
+                    height="350px"
+                    
+                    sx={{
+                        
+                        display: "flex",
+                        justifyContent: "center",
+                    }}>
+                        <Box
+                            ml="auto" 
+                            sx={{ width: "500px", height: "350px", borderRadius: 10, boxShadow: 3, backgroundImage: "url('/about.png')", backgroundSize: "cover" }}
+                            
+                            >
+                        </Box>
+                </Grid>
+                <Grid
+                    spacing={2}
+                    ml="auto"
+                    mr="auto"
+                    width="100%"
+                    size={{ xs: 12, md: 6 }}
+                    sx={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        p: 2,
+                        backgroundColor: "secondary.main",
+                        borderRadius: 2,
+                        boxShadow: 2,
+                    }}>
+                        <Box
+                            sx={{ width: "100%", height: "auto" }}
+                        >
+                            <Typography variant="body1" textAlign="left" sx={{ color: "text.dark"}}>
+                                At fimarket, we believe that every application has the potential to create 
+                                a positive impact. Our goal is to ensure that these innovations reach a broader 
+                                audience. Through this platform, we aim to inspire collaboration and the exchange 
+                                of ideas, thereby strengthening the connection between technology and the university 
+                                community. Join us in celebrating creativity and entrepreneurship as we showcase the 
+                                remarkable projects developed by our talented members.
+                            </Typography>
+                        </Box>
                 </Grid>
             </Grid>
 
@@ -103,12 +101,12 @@ export default function About() {
                 borderRadius: 2,
                 boxShadow: 3,
                 p: 2,
-                backgroundColor: "#cc0000"
+                backgroundColor: "primary.main"
             }}> 
-                <Typography variant="h1" sx={{ color: "#ffffff", fontWeight: "bold" }}>
+                <Typography variant="h1" sx={{ fontWeight: "bold" }}>
                     Our history
                 </Typography>
-                <Typography variant="body1" sx={{ mt: 2, color: "#ffffff" }}>
+                <Typography variant="body1" sx={{ mt: 2, color: "text.light", textShadow:'1px 1px #000'}}>
                     Fimarket was born from the initiative of a group of UNAM students who recognized 
                     the talent and innovation present in their community. Since our inception in 2024, 
                     we have worked tirelessly to create a space where applications that solve real 
@@ -125,9 +123,9 @@ export default function About() {
                 mb: 3,
                 borderRadius: 2,
                 boxShadow: 3,
-                backgroundColor: "#cc0000"
+                backgroundColor: "secondary.main",
             }}>
-                <Typography variant="h3" sx={{ padding:2, color: "#ffffff", fontWeight: "bold"}}>
+                <Typography variant="h3" sx={{ padding:2, color: "text.dark", fontWeight: "bold"}}>
                     Our Essence
                 </Typography>
                 
@@ -178,11 +176,11 @@ export default function About() {
                                 borderRadius: 4, 
                                 padding: 3, 
                                 mb: 2, 
-                                backgroundColor: "#cc0000"
+                                backgroundColor: "primary.main"
                             }}
                         >
-                            <SchoolIcon sx={{ mr: 2, color: "#ffffff" }} />
-                            <Typography variant="body1" sx={{ color: "#ffffff" }}>
+                            <SchoolIcon sx={{ mr: 2, color: "secondary.main" }} />
+                            <Typography variant="body1" sx={{ color: "text.light" }}>
                                 Innovation: We value and promote creative thinking and the search for new solutions to real problems.
                             </Typography>
                         </Box>
@@ -195,10 +193,10 @@ export default function About() {
                                 borderRadius: 4, 
                                 padding: 3, 
                                 mb: 2, 
-                                backgroundColor: "#cc0000"
+                                backgroundColor: "primary.main"
                             }}
                         >
-                            <GroupIcon sx={{ mr: 2, color: "#ffffff" }} />
+                            <GroupIcon sx={{ mr: 2, color: "secondary.main" }} />
                             <Typography variant="body1" sx={{ color: "#ffffff" }}>
                                 Collaboration: We encourage teamwork and the exchange of ideas among students, alumni, and faculty to enrich the learning experience.
                             </Typography>
@@ -212,10 +210,10 @@ export default function About() {
                                 borderRadius: 4, 
                                 padding: 3, 
                                 mb: 2, 
-                                backgroundColor: "#cc0000"
+                                backgroundColor: "primary.main"
                             }}
                         >
-                            <PeopleIcon sx={{ mr: 2, color: "#ffffff" }} />
+                            <PeopleIcon sx={{ mr: 2, color: "secondary.main" }} />
                             <Typography variant="body1" sx={{ color: "#ffffff" }}>
                                 Inclusivity: We believe in giving a voice to all members of our community, ensuring that all applications have the opportunity to be seen and used.
                             </Typography>
@@ -229,10 +227,10 @@ export default function About() {
                                 borderRadius: 4, 
                                 padding: 3, 
                                 mb: 2, 
-                                backgroundColor: "#cc0000"
+                                backgroundColor: "primary.main"
                             }}
                         >
-                            <FlagIcon sx={{ mr: 2, color: "#ffffff" }} />
+                            <FlagIcon sx={{ mr: 2, color: "secondary.main" }} />
                             <Typography variant="body1" sx={{ color: "#ffffff" }}>
                                 Social Impact: We are committed to promoting projects that generate a positive impact on society and improve people"s quality of life.
                             </Typography>
@@ -246,10 +244,10 @@ export default function About() {
                                 borderRadius: 4, 
                                 padding: 3, 
                                 mb: 2, 
-                                backgroundColor: "#cc0000"
+                                backgroundColor: "primary.main"
                             }}
                         >
-                            <StarIcon sx={{ mr: 2, color: "#ffffff" }} />
+                            <StarIcon sx={{ mr: 2, color: "secondary.main" }} />
                             <Typography variant="body1" sx={{ color: "#ffffff" }}>
                                 Excellence: We strive for continuous improvement in our initiatives and in the presentation of the projects we support.
                             </Typography>
