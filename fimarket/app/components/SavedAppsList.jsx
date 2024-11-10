@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, List, ListItem, ListItemAvatar, ListItemText, Avatar, Link, Grid2, Typography, Button } from '@mui/material';
+import { Box, List, ListItem, ListItemAvatar, ListItemText, Avatar, Link, Grid as Grid2, Typography, Button } from '@mui/material';
 
-const SavedAppsList = ({ userApps }) => {
+const SavedAppsList = ({ userApps, handleDelete, handleEdit }) => {
     return (
         <Box sx={{ width: '100%', bgcolor: 'transparent', backdropFilter: 'blur(5px)', borderRadius: 2, p: 2 }}>
             <List>
@@ -11,7 +11,17 @@ const SavedAppsList = ({ userApps }) => {
                     </Box>
                 ) : (
                     userApps.map((app, index) => (
-                        <ListItem key={index} sx={{ bgcolor: 'background.paper', borderRadius: 2, mb: 1, '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.3)' }, display: 'flex', flexDirection: 'column' }}>
+                        <ListItem
+                            key={index}
+                            sx={{
+                                bgcolor: 'background.paper',
+                                borderRadius: 2,
+                                mb: 1,
+                                '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.3)' },
+                                display: 'flex',
+                                flexDirection: 'column'
+                            }}
+                        >
                             <Grid2 container spacing={2} alignItems="center">
                                 <Grid2 xs={12} sm={2}>
                                     <ListItemAvatar>
@@ -25,6 +35,15 @@ const SavedAppsList = ({ userApps }) => {
                                     <Link href={app.url} target="_blank" sx={{ textDecoration: 'none', mr: 1 }}>
                                         <Button variant="contained" color="primary" fullWidth>Download</Button>
                                     </Link>
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        fullWidth
+                                        onClick={() => handleDelete(index)}
+                                        sx={{ ml: 1 }}
+                                    >
+                                        Delete
+                                    </Button>
                                 </Grid2>
                             </Grid2>
                         </ListItem>
