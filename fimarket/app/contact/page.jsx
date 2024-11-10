@@ -34,12 +34,12 @@ const AppForm = () => {
     const validFiles = files.filter((file) => file.type.startsWith("image/"));
 
     if (validFiles.length > 5) {
-      alert("Solo puedes subir hasta 5 imágenes.");
+      alert("You can only upload up to 5 images.");
       return;
     }
 
     if (validFiles.length !== files.length) {
-      alert("Solo se permiten archivos de tipo imagen.");
+      alert("Only image type files are allowed.");
     }
 
     setImages(validFiles);
@@ -65,11 +65,11 @@ const AppForm = () => {
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleOpen} sx ={{":hover": { backgroundColor: "secondary.main", color: "primary.main" },}}>
-        Añadir App
+      Add App
       </Button>
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle sx={{ backgroundColor: "primary.main", color: "white", textAlign: 'center' }}>
-          Formulario para Subir App
+          App Upload Form
         </DialogTitle>
         <DialogContent sx={{ backgroundColor: "main", color: "white" }}>
           <Box
@@ -80,7 +80,7 @@ const AppForm = () => {
           >
             <TextField
               fullWidth
-              label="Nombre de la App"
+              label="App Name"
               value={appName}
               onChange={(e) => setAppName(e.target.value)}
               margin="normal"
@@ -89,7 +89,7 @@ const AppForm = () => {
             />
             <TextField
               fullWidth
-              label="Descripción"
+              label="Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               margin="normal"
@@ -100,7 +100,7 @@ const AppForm = () => {
             />
             <TextField
               fullWidth
-              label="URL de la App"
+              label="App URL"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               margin="normal"
@@ -117,7 +117,7 @@ const AppForm = () => {
                 ":hover": { backgroundColor: "secondary.main", color: "primary.main" },
               }}
             >
-              Subir Imágenes (Máx. 5)
+              Upload Images (Max. 5)
               <input
                 type="file"
                 accept="image/*"
@@ -129,7 +129,7 @@ const AppForm = () => {
             {images.length > 0 && (
               <Box sx={{ marginTop: 2 }}>
                 <Typography variant="subtitle1" sx={{ color: "primary.main" }}>
-                  Imágenes seleccionadas:
+                  Selected images:
                 </Typography>
                 {images.map((image, index) => (
                   <Typography key={index} sx={{ color: "primary.main", textAlign: 'left' }}>
@@ -150,7 +150,7 @@ const AppForm = () => {
                 onClick={handleSubmit}
                 sx={{ backgroundColor: "primary.main", color: "white",":hover": { backgroundColor: "secondary.main", color: "primary.main" },  }}
               >
-                Añadir
+                Add
               </Button>
             </Grid>
             <Grid item xs={6}>
@@ -165,7 +165,7 @@ const AppForm = () => {
                   ,":hover": { backgroundColor: "secondary.main", color: "primary.main" },
                 }}
               >
-                Cancelar
+                Cancel
               </Button>
             </Grid>
           </Grid>
