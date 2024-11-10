@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { TextField, Button, Typography, Container, Box } from "@mui/material";
+import { TextField, Button, Typography, Container, Box, Paper } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { useRouter } from "next/navigation"; 
@@ -36,109 +36,92 @@ const SignIn = ({ onSignIn }) => { // Receive onSignIn as a prop
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minHeight: '100vh',
+                backgroundImage: 'url(/banner.jpg)',
+                backgroundSize: 'cover',
             }}
         >
-            <Container maxWidth="sm">
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        backgroundColor: 'secondary.main',
-                        padding: 4,
-                        borderRadius: 2,
-                        boxShadow: 3,
-                    }}
-                >
-                    <Typography variant="h1" sx={{ color: 'text.h1', marginBottom: 2 }}>
-                        Sign In
-                    </Typography>
-                    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-                        <TextField
-                            label="Email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            fullWidth
-                            required
-                            margin="normal"
+            <Box pt={5} pb={5}>
+                <Container maxWidth="sm" >
+                    <Paper elevation={3} sx={{ borderRadius: 3}}>
+                        <Box
                             sx={{
-                                color: 'text.dark', 
-                                '& .MuiInputLabel-root': {
-                                    color: 'text.dark', 
-                                },
-                                '& .MuiInputLabel-root.Mui-focused': {
-                                    color: 'text.dark', 
-                                },
-                                '& .MuiInputBase-input': {
-                                    color: 'text.dark', 
-                                },
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                padding: 4,
                             }}
-                        />
-                        <TextField
-                            label="Password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            fullWidth
-                            required
-                            margin="normal"
-                            sx={{
-                                color: 'text.dark', 
-                                '& .MuiInputLabel-root': {
-                                    color: 'text.dark', 
-                                },
-                                '& .MuiInputLabel-root.Mui-focused': {
-                                    color: 'text.dark', 
-                                },
-                                '& .MuiInputBase-input': {
-                                    color: 'text.dark', 
-                                },
-                            }}
-                        />
-                        <Button type="submit" variant="contained" color="secondary" fullWidth sx={{ mt: 2 }}>
-                            Login
-                        </Button>
-                    </form>
-                    <Button
-                        variant='outlined'
-                        fullWidth
-                        startIcon={<GoogleIcon />}
-                        sx={{ mt: 2, mb: 1 }}
-                    >
-                        Sign in with Google
-                    </Button>
-
-                    <Button
-                        variant='outlined'
-                        fullWidth
-                        startIcon={<FacebookIcon />}
-                        sx={{ mb: 1 }}
-                    >
-                        Sign in with Facebook
-                    </Button>
-
-                    <Box sx={{ mt: 2, textAlign: 'center' }}>
-                        <Typography variant='h6' align='center'>
-                            Don't have an account?
-                        </Typography>
-                        <Typography
-                            variant='h6'
-                            color='primary'
-                            sx={{
-                                cursor: 'pointer',
-                                '&:hover': {
-                                    color: 'black',
-                                },
-                            }}
-                            onClick={handleSU}
                         >
-                            Sign up
-                        </Typography>
-                    </Box>
-                </Box>
-            </Container>
+                            <Typography variant="h1" sx={{ color: 'text.dark', marginBottom: 5 }}>
+                                Sign In
+                            </Typography>
+                            <Typography variant="body1" sx={{ color: 'text.dark', marginBottom: 2 }}>
+                                Welcome back! Your apps are waiting for you.
+                            </Typography>
+                            <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                                <TextField
+                                    label="Email"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    fullWidth
+                                    size='small'
+                                    required
+                                    margin="normal"
+                                    sx={{
+                                        color: 'text.dark', 
+                                        '& .MuiInputLabel-root': {
+                                            color: 'text.dark', 
+                                        },
+                                        '& .MuiInputLabel-root.Mui-focused': {
+                                            color: 'text.dark', 
+                                        },
+                                        '& .MuiInputBase-input': {
+                                            color: 'text.dark', 
+                                        },
+                                        '& .MuiFormLabel-asterisk': {
+                                            display: 'none',
+                                        },
+                                    }}
+                                />
+                                <TextField
+                                    label="Password"
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    fullWidth
+                                    size='small'
+                                    required
+                                    margin="normal"
+                                    sx={{
+                                        color: 'text.dark', 
+                                        '& .MuiInputLabel-root': {
+                                            color: 'text.dark', 
+                                        },
+                                        '& .MuiInputLabel-root.Mui-focused': {
+                                            color: 'text.dark', 
+                                        },
+                                        '& .MuiInputBase-input': {
+                                            color: 'text.dark', 
+                                        },
+                                        '& .MuiFormLabel-asterisk': {
+                                            display: 'none',
+                                        },
+                                    }}
+                                />
+                                <Button type="submit" variant="contained" color="secondary" fullWidth sx={{ mt: 2 }}>
+                                    Login
+                                </Button>
+                            </form>
+                            <Box sx={{ mt: 2, textAlign: 'center' }}>
+                                <Typography variant='h6' align='center' color='text.dark'>
+                                    Don't have an account? {' '}
+                                <Typography variant='h6' component='span' color='secondary' sx={{ cursor: 'pointer', '&:hover': {color: 'black'}}} onClick={handleSU}>Sign Up</Typography>
+                                </Typography>
+                            </Box>
+                        </Box>
+                    </Paper>
+                </Container>
+            </Box>
         </Box>
     );
 };
