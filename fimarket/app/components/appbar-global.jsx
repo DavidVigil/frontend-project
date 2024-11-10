@@ -40,9 +40,14 @@ export default function AppBarGlobal() {
         setValue(0); // To highlight this tab
         router.push("/about");
     };
-
-    const goToMyApps = () => { // To go to my apps page
+    
+    const goToContact = () => { // To go to the contact page
         setValue(1); // To highlight this tab
+        router.push("/contact");
+    };
+    
+    const goToMyApps = () => { // To go to my apps page
+        setValue(2); // To highlight this tab
         router.push("/myApps");
     };
 
@@ -76,7 +81,7 @@ export default function AppBarGlobal() {
                         sx={{
                             ml: 2, // Space to the left
                             mr: 3, // Space to the right
-                            display: { xs: "none", sm: "block" }, // Hide on xs, show on sm and up
+                            display: { xs: "none", md: "block" }, // Hide on xs, show on sm and up
                             whiteSpace: "nowrap" // Prevents line break
                         }}
                     >
@@ -97,6 +102,7 @@ export default function AppBarGlobal() {
                 >
                     {/* Changes the color of the letters if the tab is selected or not */}
                     <Tab label="About" onClick={goToAbout} sx={{ color: value === 0 ? theme.palette.text.light : '#ffffff' }} />
+                    <Tab label="Contact" onClick={goToContact} sx={{ color: value === 2 ? theme.palette.text.light : '#ffffff' }} />
                     {isAuthenticated && (
                         <Tab label="My Apps" onClick={goToMyApps} sx={{ color: value === 1 ? theme.palette.text.light : '#ffffff' }} />
                     )}
