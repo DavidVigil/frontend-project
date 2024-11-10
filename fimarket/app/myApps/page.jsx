@@ -180,7 +180,13 @@ const SavedPage = () => {
                             </Grid>
                         </DialogActions>
                     </Dialog>
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Box sx={{
+                        maxHeight: 300, 
+                        overflowY: 'scroll', 
+                        backgroundColor: '#121212', 
+                        padding: 2,
+                        border: '3px solid #333' 
+                    }}>
                     <SavedAppsList userApps={userApps} handleDelete={handleDelete} />
 
                     </Box>
@@ -193,7 +199,13 @@ const SavedPage = () => {
                             Favorites Apps
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Box sx={{
+                        maxHeight: 300, 
+                        overflowY: 'scroll', 
+                        backgroundColor: '#121212', 
+                        padding: 2,
+                        border: '3px solid #333' 
+                    }}>
                         <SavedAppsList userApps={userApps} />
                     </Box>
                 </Container>
