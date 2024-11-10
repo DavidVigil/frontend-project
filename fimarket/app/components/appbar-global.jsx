@@ -6,13 +6,11 @@ import { useRouter } from "next/navigation"; // To move between tabs
 import { useEffect, useState } from "react"; // To manage states
 import { theme } from "../styles/global-theme";
 
-export default function AppBarGlobal(){
-
+export default function AppBarGlobal() {
     const router = useRouter(); // Instantiating my class for the routes
-
     const [value, setValue] = useState(false); // State to track active tab, default is false for "Home"
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // To know if i'm in or out of my account
-    
+    const [isAuthenticated, setIsAuthenticated] = useState(false); // To know if I'm in or out of my account
+
     useEffect(() => {
         // Function to handle changes in the authentication status stored in localStorage
         const handleStorageChange = () => {
@@ -21,15 +19,15 @@ export default function AppBarGlobal(){
             // Update the local state with the authentication status
             setIsAuthenticated(authStatus);
         };
-    
+
         // Listen for any changes in the storage (e.g., when authentication status is updated)
         window.addEventListener("storage", handleStorageChange);
-    
+
         // Cleanup function to remove the event listener when the component unmounts
         return () => window.removeEventListener("storage", handleStorageChange);
     }, []);
-    
-    const handleChange = (newValue) => { // Function to handle changes (clics on tabs)
+
+    const handleChange = (newValue) => { // Function to handle changes (clicks on tabs)
         setValue(newValue);
     };
 
@@ -50,32 +48,32 @@ export default function AppBarGlobal(){
 
     const handleSignOut = () => { // Function to exit the session when you are inside 
         setIsAuthenticated(false);
+        localStorage.setItem("isAuthenticated", "false"); // Update localStorage to reflect sign out
         setValue(false); // To remove the highlight
         router.push("/"); // To return to the home page
     };
 
     return (
-        <AppBar 
+        <AppBar
             position="static" // It doesn't stay visible when scrolling 
-            sx={{ 
+            sx={{
                 color: "secondary", // White
                 minHeight: "64px", // To maintain the height of the bar on all screens
                 mb: 5 // Space at the bottom
             }}
         >
             <Toolbar sx={{ minHeight: "64px" }}> {/* Ensures consistent height */}
-
-                <Box 
-                    sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={goToHome} > 
+                <Box
+                    sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={goToHome} >
                     <Image
                         src="/logo.png"
                         alt="FI Marketplace"
                         width={40}
                         height={40}
                     />
-                    <Typography 
-                        variant="h5" 
-                        sx={{ 
+                    <Typography
+                        variant="h5"
+                        sx={{
                             ml: 2, // Space to the left
                             mr: 3, // Space to the right
                             display: { xs: "none", sm: "block" }, // Hide on xs, show on sm and up
@@ -88,9 +86,9 @@ export default function AppBarGlobal(){
 
                 <Tabs
                     value={value} // Initial state
-                    onChange={(_, newValue) => handleChange(newValue)} // To manage the clics on the tabs
-                    textColor="inherit" // Inherits the color of the father
-                    sx={{ 
+                    onChange={(_, newValue) => handleChange(newValue)} // To manage the clicks on the tabs
+                    textColor="inherit" // Inherits the color of the parent
+                    sx={{
                         flexGrow: 1, // To push the following sign buttons to the right
                         "& .MuiTabs-indicator": {
                             backgroundColor: value === false ? "transparent" : theme.palette.secondary.main // Yellow highlight unless on Home
@@ -98,24 +96,25 @@ export default function AppBarGlobal(){
                     }}
                 >
                     {/* Changes the color of the letters if the tab is selected or not */}
-                    <Tab label= "About" onClick={goToAbout} sx={{ color: value === 0 ? theme.palette.text.light : '#ffffff' }}/> 
-                    <Tab label= "My Apps" onClick={goToMyApps} sx={{ color: value === 1 ? theme.palette.text.light : '#ffffff' }}/>
+                    <Tab label="About" onClick={goToAbout} sx={{ color: value === 0 ? theme.palette.text.light : '#ffffff' }} />
+                    {isAuthenticated && (
+                        <Tab label="My Apps" onClick={goToMyApps} sx={{ color: value === 1 ? theme.palette.text.light : '#ffffff' }} />
+                    )}
                 </Tabs>
 
-                { isAuthenticated ? // Are we in or out?
+                {isAuthenticated ? // Are we in or out?
                     (<Button color="secondary" onClick={handleSignOut} variant="outlined">Sign Out</Button>) // If we're in
                     :
-                    // If wer'e out:
+                    // If we're out:
                     (
                         <>
-                            <Button href="/signIn" color="secondary" sx={{ mr: 1, whiteSpace: "nowrap"}} variant="outlined">Sign In</Button>
-                            <Button href="/signUp" color="secondary" sx={{ whiteSpace: "nowrap"}} variant= "contained">Sign Up</Button>
+                            <Button href="/signIn" color="secondary" sx={{ mr: 1, whiteSpace: "nowrap" }} variant="outlined">Sign In</Button>
+                            <Button href="/signUp" color="secondary" sx={{ whiteSpace: "nowrap" }} variant="contained">Sign Up</Button>
                         </>
                     )
                 }
-            
+
             </Toolbar>
         </AppBar>
-
     );
 }
