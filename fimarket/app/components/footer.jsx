@@ -43,7 +43,7 @@ return (
                     sx={{
                         color: 'secondary.main', // Initial color
                         '&:visited': {
-                        color: 'secondary.main', // Color después de hacer clic
+                        color: 'secondary.main', // Color after clicking
                         },
                         '&:active': {
                         color: 'white', // Color when clicking on the link
@@ -59,7 +59,7 @@ return (
                     sx={{
                         color: 'secondary.main', // Initial color
                         '&:visited': {
-                        color: 'secondary.main', // Color después de hacer clic
+                        color: 'secondary.main', // Color after clicking
                         },
                         '&:active': {
                         color: 'white', // Color when clicking on the link
@@ -75,7 +75,7 @@ return (
                     sx={{
                         color: 'secondary.main', // Initial color
                         '&:visited': {
-                        color: 'secondary.main', // Color después de hacer clic
+                        color: 'secondary.main', // Color after clicking
                         },
                         '&:active': {
                         color: 'white', // Color when clicking on the link
