@@ -4,15 +4,24 @@ import FileDownloadTwoToneIcon from '@mui/icons-material/FileDownloadTwoTone';
 
 
 
-const AppList = ({ filterType, searchTerm, isAuthenticated, userApps = [], setUserApps, sortingApps, appDef }) => { // Default value for userApps and new props
+const AppList = ({ filterType, searchTerm, userApps = [], setUserApps, sortingApps, appDef }) => { // Default value for userApps and new props
     const [saveDialogOpen, setSaveDialogOpen] = useState(false);
     const [open, setOpen] = React.useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const handleClickDialog = ( ) => { 
 
     };
 
+    const handleStorageChange = () => {
+        // Check if the user is authenticated based on the localStorage value
+        const authStatus = localStorage.getItem("isAuthenticated") === "true";
+        // Update the local state with the authentication status
+        setIsAuthenticated(authStatus);
+    };
+
     const handleSaveClick = (app) => {
+        handleStorageChange();
         if (!isAuthenticated) {
             setSaveDialogOpen(true);
         } else {
@@ -114,27 +123,13 @@ const AppList = ({ filterType, searchTerm, isAuthenticated, userApps = [], setUs
                 ))}
             </List>
             <Dialog
+                open={saveDialogOpen}
+                onClose={() => setSaveDialogOpen(false)}
                 sx={{
                     backdropFilter: 'blur(5px)',
                 }}
-                open={saveDialogOpen} onClose={() => setSaveDialogOpen(false)}>
-                <DialogTitle
-                    sx={{ color: 'text.title' }}
-                >Save</DialogTitle>
-                <DialogContent>
-                    <Typography
-                        sx={{ color: 'text.subtitle' }}
-                    >You must sign in to do this action!</Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        sx={{ color: 'text.dark' }}
-                        onClick={() => setSaveDialogOpen(false)}>Close</Button>
-                    <Button
-                        href='/signIn'
-                        sx={{ color: 'text.dark' }}
-                        onClick={() => alert('Redirect to sign-in')}>Sign In</Button>
-                </DialogActions>
+            >
+                {isAuthenticated ? (<DialogTitle>App saved successfully!</DialogTitle>) : (<DialogTitle>Sign in to save apps</DialogTitle>)}
             </Dialog>
         </Box>
     );

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Box, Container, Typography, Button, Dialog, DialogContent, DialogActions, DialogTitle, TextField, Grid } from '@mui/material';
+import { Box, Container, Typography, Button, Dialog, DialogContent, DialogActions, DialogTitle, TextField, Grid } from '@mui/material';
 import SavedAppsList from '../components/SavedAppsList.jsx';
 import BackgroundContainer from '../components/BackgroundContainer.jsx';
 
@@ -79,7 +79,6 @@ const SavedPage = () => {
     return (
         <Container maxWidth="md" sx={{ pt: 4, mt: 5 }}>
             <BackgroundContainer>
-                <CssBaseline />
                 <Container maxWidth="md" sx={{ pt: 4 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <Typography variant="h1" sx={{ color: 'text.h1', marginBottom: 2 }}>

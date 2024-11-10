@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import AppList from './components/AppList';
 import SearchBar from './components/SearchBar';
-import BackgroundContainer from './components/BackgroundContainer';
 import { allApps } from './data/apps';
 import { theme } from './styles/global-theme';
 

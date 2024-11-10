@@ -8,18 +8,19 @@ const getRandomSize = () => Math.floor(Math.random() * 100) + 50;
 
 const moveAvatar = keyframes`
   0% {
+    transform: translateY(1000);
     opacity: 0;
   }
   10% {
-    transform: translateY(-100vh);
+    # transform: translateY(-100vh);
     opacity: 0.7;
   }
   90% {
-    transform: translateY(-300vh);
+    # transform: translateY(-300vh);
     opacity: 0.5;
   }
   100% {
-    transform: translateY(-800vh);
+    transform: translateY(-1000vh);
     opacity: 0.1;
   }
 `;
@@ -29,7 +30,7 @@ const generateAvatarStyle = () => {
     return {
         position: 'absolute',
         top: `100vh`,
-        left: `${getRandomPosition(90)}%`,
+        left: `${getRandomPosition(0)}%`,
         width: size,
         height: size,
         opacity: 0.3,
@@ -48,7 +49,7 @@ const BackgroundAvatars = () => {
                 style: generateAvatarStyle()
             }));
             setAvatars(avatarArray);
-        }, 5000); // Refrescar cada 5 segundos
+        }, 8000); // Refrescar cada 8 segundos
 
         return () => clearInterval(interval);
     }, []);
