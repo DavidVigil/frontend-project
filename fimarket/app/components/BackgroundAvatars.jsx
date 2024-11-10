@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Box } from '@mui/material';
-import { pseudoApps } from '../data/apps';
+import { allApps, pseudoApps } from '../data/apps';
 import { keyframes } from '@emotion/react';
 
 const getRandomPosition = (max) => Math.floor(Math.random() * max);
@@ -8,18 +8,20 @@ const getRandomSize = () => Math.floor(Math.random() * 100) + 50;
 
 const moveAvatar = keyframes`
   0% {
-    transform: translateY(100vh);
+    transform: translateY(1000);
     opacity: 0;
   }
   10% {
-    opacity: 0.3;
+    # transform: translateY(-100vh);
+    opacity: 0.7;
   }
   90% {
-    opacity: 0.3;
+    # transform: translateY(-300vh);
+    opacity: 0.5;
   }
   100% {
-    transform: translateY(-100vh);
-    opacity: 0;
+    transform: translateY(-1000vh);
+    opacity: 0.1;
   }
 `;
 
@@ -28,7 +30,7 @@ const generateAvatarStyle = () => {
     return {
         position: 'absolute',
         top: `100vh`,
-        left: `${getRandomPosition(90)}%`,
+        left: `${getRandomPosition(0)}%`,
         width: size,
         height: size,
         opacity: 0.3,
@@ -41,13 +43,13 @@ const BackgroundAvatars = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const avatarArray = pseudoApps.map((app, index) => ({
+            const avatarArray = allApps.map((app, index) => ({
                 key: index,
                 src: app.logo,
                 style: generateAvatarStyle()
             }));
             setAvatars(avatarArray);
-        }, 2000); // Refrescar cada 5 segundos
+        }, 8000); // Refrescar cada 8 segundos
 
         return () => clearInterval(interval);
     }, []);

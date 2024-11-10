@@ -16,7 +16,7 @@ export const theme = createTheme({
             footer: "#dddddd",
         },
         text: {
-            main: "#bbbbb",
+            main: "#bbbbbb",
             light: "#ffffff",
             dark: "#000000",
             title: "#ff0000",

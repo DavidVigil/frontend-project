@@ -1,4 +1,4 @@
-export const pseudoApps = [
+export const allApps = [
     {
         title: 'App One',
         info: 'Windows, iOS',
