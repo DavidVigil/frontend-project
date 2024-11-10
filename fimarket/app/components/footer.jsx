@@ -53,6 +53,22 @@ return (
                     Main Menu
                 </Link>
                 <Link
+                    href="/about"
+                    underline="hover"
+                    display="block"
+                    sx={{
+                        color: 'secondary.main', // Initial color
+                        '&:visited': {
+                        color: 'secondary.main', // Color después de hacer clic
+                        },
+                        '&:active': {
+                        color: 'white', // Color when clicking on the link
+                        },
+                    }}
+                >
+                    About
+                </Link>
+                <Link
                     href="/contact"
                     underline="hover"
                     display="block"
