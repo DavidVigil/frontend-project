@@ -183,9 +183,8 @@ const SavedPage = () => {
                     <Box sx={{
                         maxHeight: 300, 
                         overflowY: 'scroll', 
-                        backgroundColor: '#121212', 
+                        backgroundColor: 'primary.main', 
                         padding: 2,
-                        border: '3px solid #333' 
                     }}>
                     <SavedAppsList userApps={userApps} handleDelete={handleDelete} />
 
@@ -202,9 +201,8 @@ const SavedPage = () => {
                     <Box sx={{
                         maxHeight: 300, 
                         overflowY: 'scroll', 
-                        backgroundColor: '#121212', 
-                        padding: 2,
-                        border: '3px solid #333' 
+                        backgroundColor: 'primary.main', 
+                        padding: 2, 
                     }}>
                         <SavedAppsList userApps={userApps} />
                     </Box>
