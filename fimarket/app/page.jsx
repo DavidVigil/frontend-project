@@ -72,7 +72,12 @@ const Page = () => {
             setSearchTerm={setSearchTerm} 
             setFilterType={setFilterType}
           />
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{
+                        maxHeight: 300, 
+                        overflowY: 'scroll', 
+                        backgroundColor: 'main', 
+                        padding: 2,
+                    }}>
             <AppList
               searchTerm={searchTerm}
               filterType={filterType}
