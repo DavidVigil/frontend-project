@@ -30,36 +30,54 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import TipsAndUpdatesTwoToneIcon from '@mui/icons-material/TipsAndUpdatesTwoTone';
-
+import { ContentCutOutlined } from '@mui/icons-material';
 
 
 const SignUp = ({ onSignUp }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); // Instantiating my class for the routes
+  const router = useRouter(); //function to redirect "Don't have an account? Sign Up"
+  const user = { emailU: email, passwordU: password };
+
 
   const handleSubmit = (e) => {
-    // Prevent the default form submission behavior
+    // Prevent the default form submission behavior.
     e.preventDefault();
+  
+    /*---------------------SIGN UP LOGIC--------------------------*/
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+
+    users.push(user);
+
+    localStorage.setItem('users', JSON.stringify(users));
+
+    router.push("/");
+
+    console.log("Saved users on LocalStorage:", users);
+    /*-----------------------------------------------------------*/
+
 
     // Set the authentication status to true in localStorage
     localStorage.setItem("isAuthenticated", "true");
-    
+     
     // Dispatch a storage event to notify other components (like AppBarGlobal)
     // that the authentication status has changed
     window.dispatchEvent(new Event("storage"));
 
-    // Redirect the user to the home page after successful login
-    router.push("/");
-  }
+    //Looks for SignUp email and password.
+    console.log("Signup email:", email, "password:", password);
 
-  const handleSI = () => { // Function to signUp
+    };
+
+  const stringifiedPerson = localStorage.getItem('user') ;
+  const personAsObjectAgain = JSON.parse(stringifiedPerson );
+
+  const handleSI = () => { // "Don't have an account? Sign Up"
     router.push("/signIn");
   };
 
   return (
-    <Box
-        
+    <Box        
       sx={{
         minHeight: 'flex',
         p: 3,
@@ -249,6 +267,8 @@ const SignUp = ({ onSignUp }) => {
                     },
                   }}
                 />
+
+
                 <Button sx={{mt:6}} type="submit" variant='contained' color='secondary' fullWidth>
                   Sign Up
                 </Button>
