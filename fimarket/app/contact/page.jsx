@@ -1,178 +1,79 @@
 "use client";
 
-import React, { useState } from "react";
-import {
-  Button,
-  TextField,
-  Box,
-  Typography,
-  Grid,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
+import React from 'react';
+import { Container, Typography, Box, Stack } from '@mui/material';
+import PhoneIcon from '@mui/icons-material/Phone';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import RoomIcon from '@mui/icons-material/Room';
+import { useTheme } from '@mui/material/styles';
 
-const AppForm = () => {
-  const [open, setOpen] = useState(false);
-  const [appName, setAppName] = useState("");
-  const [description, setDescription] = useState("");
-  const [url, setUrl] = useState("");
-  const [images, setImages] = useState([]);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    handleCancel();
-  };
-
-  const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files);
-    const validFiles = files.filter((file) => file.type.startsWith("image/"));
-
-    if (validFiles.length > 5) {
-      alert("You can only upload up to 5 images.");
-      return;
-    }
-
-    if (validFiles.length !== files.length) {
-      alert("Only image type files are allowed.");
-    }
-
-    setImages(validFiles);
-  };
-
-  const handleSubmit = () => {
-    console.log({
-      appName,
-      description,
-      url,
-      images,
-    });
-    handleClose();
-  };
-
-  const handleCancel = () => {
-    setAppName("");
-    setDescription("");
-    setUrl("");
-    setImages([]);
-  };
+const ContactPage = () => {
+  const theme = useTheme(); // Acceder al tema
 
   return (
-    <div>
-      <Button variant="contained" color="primary" onClick={handleOpen} sx ={{":hover": { backgroundColor: "secondary.main", color: "primary.main" },}}>
-      Add App
-      </Button>
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-        <DialogTitle sx={{ backgroundColor: "primary.main", color: "white", textAlign: 'center' }}>
-          App Upload Form
-        </DialogTitle>
-        <DialogContent sx={{ backgroundColor: "main", color: "white" }}>
-          <Box
-            component="form"
-            noValidate
-            autoComplete="off"
-            sx={{ marginTop: 2 }}
-          >
-            <TextField
-              fullWidth
-              label="App Name"
-              value={appName}
-              onChange={(e) => setAppName(e.target.value)}
-              margin="normal"
-              InputLabelProps={{ style: { color: "black" } }}
-              InputProps={{ style: { color: "black" } }}
-            />
-            <TextField
-              fullWidth
-              label="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              margin="normal"
-              multiline
-              rows={4}
-              InputLabelProps={{ style: { color: "black" } }}
-              InputProps={{ style: { color: "black" } }}
-            />
-            <TextField
-              fullWidth
-              label="App URL"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              margin="normal"
-              InputLabelProps={{ style: { color: "black" } }}
-              InputProps={{ style: { color: "black" } }}
-            />
-            <Button
-              variant="contained"
-              component="label"
+    <Container maxWidth="md" sx={{ mt: 5 }}>
+      <Typography variant="h4" gutterBottom color="primary">
+        Contact
+      </Typography>
+
+      <Box mt={5}>
+        <Stack direction="row" spacing={1} alignItems="center" mb={2}>
+          <RoomIcon color="primary" />
+          <Typography variant="body1" color="black">
+            Escolar 04360, C.U., Coyoacán, 04510 Ciudad de México, CDMX
+          </Typography>
+        </Stack>
+
+        <Stack direction="row" spacing={1} alignItems="center" mb={2}>
+          <PhoneIcon color="primary" />
+          <Typography variant="body1" color="black">
+            Phone: +525556220866
+          </Typography>
+        </Stack>
+
+        <Stack direction="row" spacing={1} alignItems="center" mb={2}>
+          <MailOutlineIcon color="primary" />
+          <Typography variant="body1" color="black">
+            Questions and comments:
+            <Box
+              component="span"
               sx={{
-                marginTop: 2,
-                backgroundColor: "primary",
-                color: "white",
-                ":hover": { backgroundColor: "secondary.main", color: "primary.main" },
+                display: 'inline-block',
+                backgroundColor: 'rgba(255, 224, 178, 0.3)', 
+                padding: '4px 8px',
+                ml: 1,
+                borderRadius: '4px',
               }}
             >
-              Upload Images (Max. 5)
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                hidden
-                onChange={handleImageUpload}
-              />
-            </Button>
-            {images.length > 0 && (
-              <Box sx={{ marginTop: 2 }}>
-                <Typography variant="subtitle1" sx={{ color: "primary.main" }}>
-                  Selected images:
-                </Typography>
-                {images.map((image, index) => (
-                  <Typography key={index} sx={{ color: "primary.main", textAlign: 'left' }}>
-                    {image.name}
-                  </Typography>
-                ))}
-              </Box>
-            )}
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ backgroundColor: "primary.main" }}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit}
-                sx={{ backgroundColor: "primary.main", color: "white",":hover": { backgroundColor: "secondary.main", color: "primary.main" },  }}
-              >
-                Add
-              </Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                onClick={handleClose}
-                sx={{
-                  color: "white",
-                  borderColor: "white"
-                  ,":hover": { backgroundColor: "secondary.main", color: "primary.main" },
+              <a
+                href="mailto:ingenierochupamatracas3000@gmail.com"
+                style={{
+                  color: theme.palette.primary.main,
+                  textDecoration: 'underline',
+                  fontWeight: 'bold'
                 }}
               >
-                Cancel
-              </Button>
-            </Grid>
-          </Grid>
-        </DialogActions>
-      </Dialog>
-    </div>
+                ingenierochupamatracas3000@gmail.com
+              </a>
+            </Box>
+          </Typography>
+
+        </Stack>
+      </Box>
+
+      <Box mt={4} display="flex" justifyContent="center">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120475.88670245957!2d-99.29768026211887!3d19.3313833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce00015be0a713%3A0x3fc11681a8244370!2sFacultad%20de%20Ingenier%C3%ADa%20UNAM!5e0!3m2!1ses-419!2smx!4v1731566431734!5m2!1ses-419!2smx"
+          width="100%"
+          height="400"
+          style={{ border: 0 }}
+          allowFullScreen=""
+          loading="lazy"
+          title="Location Map"
+        ></iframe>
+      </Box>
+    </Container>
   );
 };
 
-export default AppForm;
+export default ContactPage;
