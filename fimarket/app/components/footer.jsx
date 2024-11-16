@@ -43,7 +43,7 @@ return (
                     sx={{
                         color: 'secondary.main', // Initial color
                         '&:visited': {
-                        color: 'secondary.main', // Color después de hacer clic
+                        color: 'secondary.main', // Color after clicking
                         },
                         '&:active': {
                         color: 'white', // Color when clicking on the link
@@ -53,13 +53,29 @@ return (
                     Main Menu
                 </Link>
                 <Link
+                    href="/about"
+                    underline="hover"
+                    display="block"
+                    sx={{
+                        color: 'secondary.main', // Initial color
+                        '&:visited': {
+                        color: 'secondary.main', // Color after clicking
+                        },
+                        '&:active': {
+                        color: 'white', // Color when clicking on the link
+                        },
+                    }}
+                >
+                    About
+                </Link>
+                <Link
                     href="/contact"
                     underline="hover"
                     display="block"
                     sx={{
                         color: 'secondary.main', // Initial color
                         '&:visited': {
-                        color: 'secondary.main', // Color después de hacer clic
+                        color: 'secondary.main', // Color after clicking
                         },
                         '&:active': {
                         color: 'white', // Color when clicking on the link
@@ -106,35 +122,7 @@ return (
             </Grid>
 
             {/* News letter section */}
-            <Grid item xs={12} md={4}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-                    Contact Information
-                </Typography>
-                <Typography variant="body2">
-                    Reach out to us for updates and support
-                </Typography>
-                <Box sx={{ mt: 2 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 'bold', mt: 1 }}>
-                        Email:
-                    </Typography>
-                    <Typography variant="body2">
-                        fi_market@comunidad.unam.mx
-                    </Typography>
-                    <Typography variant="body2" sx={{ fontWeight: 'bold', mt: 2 }}>
-                        Phone:
-                    </Typography>
-                    <Typography variant="body2">
-                    55 5622 0866
-                    </Typography>
-
-                    <Typography variant="body2" sx={{ fontWeight: 'bold', mt: 2 }}>
-                        Physical Address:
-                    </Typography>
-                    <Typography variant="body2">
-                    Escolar 04360, C.U., Coyoacán, 04510 Ciudad de México, CDMX
-                    </Typography>
-                </Box>
-            </Grid>
+            
         </Grid>
 
         {/* Social Media and Lenguage bottom */}
