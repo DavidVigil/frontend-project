@@ -21,7 +21,7 @@ export default function About() {
         }}>
             <Box sx={{
                 boxShadow: 3,
-                backgroundImage: "url('/header.png')",
+                backgroundImage: "url('/banner.jpg')",
                 backgroundSize: "cover",
                 height: "200px",
                 width: "100%",
