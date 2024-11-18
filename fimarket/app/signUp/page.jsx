@@ -69,8 +69,7 @@ const SignUp = ({ onSignUp }) => {
 
     };
 
-  const stringifiedPerson = localStorage.getItem('user') ;
-  const personAsObjectAgain = JSON.parse(stringifiedPerson );
+
 
   const handleSI = () => { // "Don't have an account? Sign Up"
     router.push("/signIn");
