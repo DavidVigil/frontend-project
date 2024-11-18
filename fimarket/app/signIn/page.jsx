@@ -5,6 +5,7 @@ import { TextField, Button, Typography, Container, Box, Paper } from "@mui/mater
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { useRouter } from "next/navigation"; 
+import { userAgentFromString } from 'next/server';
 
 const SignIn = ({ onSignIn }) => { // Receive onSignIn as a prop
     const [email, setEmail] = useState('');
@@ -14,21 +15,32 @@ const SignIn = ({ onSignIn }) => { // Receive onSignIn as a prop
     const handleSubmit = (e) => {
         // Prevent the default form submission behavior
         e.preventDefault();
+
+        /*---------------------SIGN IN LOGIC--------------------------*/
+
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        const foundUser = users.find(u => u.emailU === email && u.passwordU === password);
+
+
+        if (foundUser) {
+            localStorage.setItem("isAuthenticated", "true");
+            window.dispatchEvent(new Event("storage"));
+            router.push("/");
+        } else {
+            alert("Incorrect username or password :(. Please, try again.");
+        }    
     
-        // Set the authentication status to true in localStorage
-        localStorage.setItem("isAuthenticated", "true");
-    
-        // Dispatch a storage event to notify other components (like AppBarGlobal)
-        // that the authentication status has changed
-        window.dispatchEvent(new Event("storage"));
-    
-        // Redirect the user to the home page after successful login
-        router.push("/");
+    /*-----------------------------------------------------------*/
+ 
     }
 
     const handleSU = () => {
         router.push("/signUp");
     };
+
+
+    
 
     return (
         <Box
