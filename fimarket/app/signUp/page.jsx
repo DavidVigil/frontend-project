@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react';
 import { Link } from "next/navigation"; // To move SignUp
 import { useRouter } from "next/navigation"; // To move between tabs
 
-
 //Components MUI
 import {
   Box,
@@ -17,6 +16,10 @@ import {
   FormControlLabel,
   Grid,
   Grid2,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
   Paper,
   TextField,
   Typography,
@@ -30,7 +33,8 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import TipsAndUpdatesTwoToneIcon from '@mui/icons-material/TipsAndUpdatesTwoTone';
-import { ContentCutOutlined } from '@mui/icons-material';
+import { ContentCutOutlined, Password } from '@mui/icons-material';
+import CheckIcon from '@mui/icons-material/Check';
 
 import axios from 'axios';
 
@@ -38,22 +42,30 @@ const SignUp = ({ onSignUp }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter(); //function to redirect "Don't have an account? Sign Up" 
+  
+  const passwordRequirements = [
+    { text: "At least one uppercase letter", regex: /[A-Z]/ }, 
+    { text: "Minimum of 8 characters", regex: /.{8,}/ }, 
+    { text: "At least one special character", regex: /[!@#$%^&*(),.?":{}|<>]/ },
+  ];
 
-  useEffect(() => {
-    CreateUser();
-    }, []
-  );
+  const checkRequirement = (r) => r.regex.test(password);
 
   const CreateUser = async () => {
     try { const response = await axios.post('http://127.0.0.1:5000/api/v1/users', 
       { email: email, password: password }, 
       { headers: { 'Content-Type': 'application/json' } }); 
-      console.log('User created:', response.data); 
+      console.log('User created:', response.data);
+      // set local storage
+      localStorage.setItem('user', JSON.stringify(response.data.email));
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('userID', response.data._id);
+      // redirect to home page
       router.push("/");
-    } 
-    catch (error) {
-      if (error.response) { 
-        switch (error.response.data.error) {
+    }
+    catch (e) {
+      if (e.response) { 
+        switch (e.response.data.error) {
           case 'User already exists':
             alert("This email is already registered. Please, try another.");
             break;
@@ -64,7 +76,7 @@ const SignUp = ({ onSignUp }) => {
             alert("Please, enter a valid password.");
             break;
           default:
-            // console.error('Error response:', error.response); 
+            console.error('Error response:', e.response); 
             break;
         }
       } 
@@ -80,6 +92,10 @@ const SignUp = ({ onSignUp }) => {
   const handleSubmit = (e) => {
     // Prevent the default form submission behavior.
     e.preventDefault();
+
+    if(email === '' || password === '') {
+      return;
+    }
 
     CreateUser();
   };
@@ -281,7 +297,36 @@ const SignUp = ({ onSignUp }) => {
                     },
                   }}
                 />
+                <List> {passwordRequirements.map((req, index) => (
+                  <ListItem key={index}> 
+                    <ListItemIcon sx={{ color: 'secondary.main' }}> 
+                      {checkRequirement(req) ? <CheckIcon/> : null} 
+                    </ListItemIcon> 
+                  <ListItemText primary={<Typography color='text.light'>{req.text}</Typography>} /> 
+                  </ListItem>))} 
+                </List>
+                
 
+                <FormControlLabel
+                  control={
+                    <Checkbox sx={{
+                      color: 'secondary.main',
+                      '&.Mui-checked': {
+                        color: 'secondary.main',
+                      },
+                    }}/>
+                  }
+                  label={
+                    <Typography variant='h6' color='text.light'>
+                      I agree to the Terms and conditions
+                    </Typography>
+                  }
+                  sx={{
+                    '& .MuiTypography-body1': {
+                      color: 'text.light',
+                    },
+                  }}
+                />
 
                 <Button sx={{mt:6}} type="submit" variant='contained' color='secondary' fullWidth>
                   Sign Up
