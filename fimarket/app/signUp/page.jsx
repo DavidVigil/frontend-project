@@ -37,22 +37,43 @@ import axios from 'axios';
 const SignUp = ({ onSignUp }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); //function to redirect "Don't have an account? Sign Up"
-  const [users, setUsers] = useState([]);
+  const router = useRouter(); //function to redirect "Don't have an account? Sign Up" 
 
   useEffect(() => {
-    FetchUsers();
+    CreateUser();
     }, []
   );
 
-  const FetchUsers = async () => {
-    try{
-      const response = await axios.get('http://127.0.0.1:5000/api/v1/users');
-      setUsers(response.data);
-    }
+  const CreateUser = async () => {
+    try { const response = await axios.post('http://127.0.0.1:5000/api/v1/users', 
+      { email: email, password: password }, 
+      { headers: { 'Content-Type': 'application/json' } }); 
+      console.log('User created:', response.data); 
+      router.push("/");
+    } 
     catch (error) {
-      console.error("Error fetching users: ", error);
-      setUsers([]);
+      if (error.response) { 
+        switch (error.response.data.error) {
+          case 'User already exists':
+            alert("This email is already registered. Please, try another.");
+            break;
+          case 'Invalid email':
+            alert("Please, enter a valid email.");
+            break;
+          case 'Validation failed: Password must be at least 8 characters long':
+            alert("Please, enter a valid password.");
+            break;
+          default:
+            // console.error('Error response:', error.response); 
+            break;
+        }
+      } 
+      else if (error.request) { // The request was made but no response was received 
+          console.error('Error request:', error.request); 
+      } 
+      else { // Something happened in setting up the request that triggered an Error 
+          console.error('Error message:', error.message); 
+      } 
     }
   };
 
@@ -60,35 +81,7 @@ const SignUp = ({ onSignUp }) => {
     // Prevent the default form submission behavior.
     e.preventDefault();
 
-    // await until the users are fetched
-  
-    /*---------------------SIGN UP LOGIC--------------------------*/
-    if(users.find(u => u.email === email)){
-      alert("This email is already registered. Please, try another.");
-      console.log("This email is already registered. Please, try another.");
-    }
-
-    // users.push(user);
-
-    // localStorage.setItem('users', JSON.stringify(users));
-
-    // router.push("/");
-
-    console.log("Saved users on LocalStorage:", users);
-    /*-----------------------------------------------------------*/
-
-
-    // Set the authentication status to true in localStorage
-    // localStorage.setItem("isAuthenticated", "true");
-     
-    // Dispatch a storage event to notify other components (like AppBarGlobal)
-    // that the authentication status has changed
-    // window.dispatchEvent(new Event("storage"));
-
-    //Looks for SignUp email and password.
-    console.log("Signup email:", email, "password:", password);
-
-    // setUsers([]);
+    CreateUser();
   };
 
 
@@ -306,6 +299,6 @@ const SignUp = ({ onSignUp }) => {
       </Container>
     </Box>
   );
-}
+};
 
 export default SignUp;
