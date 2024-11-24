@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Link } from "next/navigation"; // To move SignUp
 import { useRouter } from "next/navigation"; // To move between tabs
@@ -32,42 +32,64 @@ import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import TipsAndUpdatesTwoToneIcon from '@mui/icons-material/TipsAndUpdatesTwoTone';
 import { ContentCutOutlined } from '@mui/icons-material';
 
+import axios from 'axios';
 
 const SignUp = ({ onSignUp }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter(); //function to redirect "Don't have an account? Sign Up"
-  const user = { emailU: email, passwordU: password };
+  const [users, setUsers] = useState([]);
 
+  useEffect(() => {
+    FetchUsers();
+    }, []
+  );
+
+  const FetchUsers = async () => {
+    try{
+      const response = await axios.get('http://127.0.0.1:5000/api/v1/users');
+      setUsers(response.data);
+    }
+    catch (error) {
+      console.error("Error fetching users: ", error);
+      setUsers([]);
+    }
+  };
 
   const handleSubmit = (e) => {
     // Prevent the default form submission behavior.
     e.preventDefault();
+
+    // await until the users are fetched
   
     /*---------------------SIGN UP LOGIC--------------------------*/
-    let users = JSON.parse(localStorage.getItem('users')) || [];
+    if(users.find(u => u.email === email)){
+      alert("This email is already registered. Please, try another.");
+      console.log("This email is already registered. Please, try another.");
+    }
 
-    users.push(user);
+    // users.push(user);
 
-    localStorage.setItem('users', JSON.stringify(users));
+    // localStorage.setItem('users', JSON.stringify(users));
 
-    router.push("/");
+    // router.push("/");
 
     console.log("Saved users on LocalStorage:", users);
     /*-----------------------------------------------------------*/
 
 
     // Set the authentication status to true in localStorage
-    localStorage.setItem("isAuthenticated", "true");
+    // localStorage.setItem("isAuthenticated", "true");
      
     // Dispatch a storage event to notify other components (like AppBarGlobal)
     // that the authentication status has changed
-    window.dispatchEvent(new Event("storage"));
+    // window.dispatchEvent(new Event("storage"));
 
     //Looks for SignUp email and password.
     console.log("Signup email:", email, "password:", password);
 
-    };
+    // setUsers([]);
+  };
 
 
 
