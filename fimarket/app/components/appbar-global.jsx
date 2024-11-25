@@ -1,5 +1,6 @@
 "use client";
 
+// Import necessary components from Material UI and other libraries
 import { AppBar, Box, Button, Tab, Tabs, Toolbar, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,113 +9,123 @@ import { theme } from "../styles/global-theme";
 
 export default function AppBarGlobal() {
     const router = useRouter();
-    const [value, setValue] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(null);
+    const [value, setValue] = useState(false);  // State for tab selection (default: false)
+    const [isAuthenticated, setIsAuthenticated] = useState(null);  // State for authentication status (null initially)
 
-    // Función para actualizar el estado de autenticación
+    // Function to update authentication status based on localStorage value
     const updateAuthStatus = () => {
-        const authStatus = localStorage.getItem("isAuthenticated") === "true";
-        setIsAuthenticated(authStatus);
+        const authStatus = localStorage.getItem("isAuthenticated") === "true"; // Check if user is authenticated in localStorage
+        setIsAuthenticated(authStatus); // Set authentication status
     };
 
     useEffect(() => {
-        // ** Inicializa el estado de autenticación desde localStorage **
+        // ** Initialize authentication status from localStorage **
         updateAuthStatus();
 
-        // ** Revisa el estado de autenticación cada segundo **
-        const intervalId = setInterval(updateAuthStatus, 1000);
+        // ** Check authentication status every second **
+        const intervalId = setInterval(updateAuthStatus, 1000); // Update authentication status at intervals
 
+        // Cleanup: clear interval when the component is unmounted
         return () => {
-            clearInterval(intervalId); // Limpia el intervalo cuando el componente se desmonta
+            clearInterval(intervalId); // Clears the interval to avoid memory leaks
         };
-    }, []);
+    }, []); // Empty dependency array ensures this runs once when the component mounts
 
+    // Handle tab change and update the selected value
     const handleChange = (newValue) => {
-        setValue(newValue);
+        setValue(newValue); // Update the selected tab
     };
 
+    // Navigation functions for each tab
     const goToHome = () => {
-        setValue(false);
-        router.push("/");
+        setValue(false); // Reset tab value for home
+        router.push("/"); // Navigate to home page
     };
 
     const goToAbout = () => {
-        setValue(0);
-        router.push("/about");
+        setValue(0); // Set tab value for About
+        router.push("/about"); // Navigate to About page
     };
 
     const goToContact = () => {
-        setValue(1);
-        router.push("/contact");
+        setValue(1); // Set tab value for Contact
+        router.push("/contact"); // Navigate to Contact page
     };
 
     const goToMyApps = () => {
-        setValue(2);
-        router.push("/myApps");
+        setValue(2); // Set tab value for My Apps
+        router.push("/myApps"); // Navigate to My Apps page
     };
 
+    // Handle sign out process
     const handleSignOut = () => {
-        setIsAuthenticated(false);
-        localStorage.setItem("isAuthenticated", "false"); // Actualiza el localStorage
-        setValue(false);
-        router.push("/");
+        setIsAuthenticated(false); // Update authentication status
+        localStorage.setItem("isAuthenticated", "false"); // Update localStorage
+        setValue(false); // Reset tab value
+        router.push("/"); // Redirect to home page
     };
 
     return (
         <AppBar
             position="static"
             sx={{
-                color: "secondary",
-                minHeight: "64px",
-                mb: 5,
+                color: "secondary", // Set text color for the AppBar
+                minHeight: "64px", // Set minimum height for the AppBar
+                mb: 5, // Margin bottom for spacing
             }}
         >
             <Toolbar sx={{ minHeight: "64px" }}>
                 <Box
                     sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-                    onClick={goToHome}
+                    onClick={goToHome} // Navigate to home page when clicked
                 >
                     <Image
-                        src="/logo.png"
+                        src="/logo.png" // Logo image source
                         alt="FI Marketplace"
                         width={40}
-                        height={40}
+                        height={40} // Logo dimensions
                     />
                     <Typography
                         variant="h5"
                         sx={{
-                            ml: 2,
-                            mr: 3,
-                            display: { xs: "none", md: "block" },
-                            whiteSpace: "nowrap",
+                            ml: 2, // Margin left
+                            mr: 3, // Margin right
+                            display: { xs: "none", md: "block" }, // Hide on small screens, show on medium and large
+                            whiteSpace: "nowrap", // Prevent text from wrapping
                         }}
                     >
                         FI Marketplace
                     </Typography>
                 </Box>
 
+                {/* Tabs for navigation */}
                 <Tabs
-                    value={value}
-                    onChange={(_, newValue) => handleChange(newValue)}
-                    textColor="inherit"
+                    value={value} // Controlled value for the selected tab
+                    onChange={(_, newValue) => handleChange(newValue)} // Update tab selection
+                    textColor="inherit" // Inherit text color
                     sx={{
-                        flexGrow: 1,
+                        flexGrow: 1, // Allow Tabs to take up remaining space
                         "& .MuiTabs-indicator": {
-                            backgroundColor: value === false ? "transparent" : theme.palette.secondary.main,
+                            backgroundColor: value === false ? "transparent" : theme.palette.secondary.main, // Tab indicator color
                         },
                     }}
                 >
+                    {/* About Tab */}
                     <Tab label="About" onClick={goToAbout} sx={{ color: value === 0 ? theme.palette.text.light : '#ffffff' }} />
+                    {/* Contact Tab */}
                     <Tab label="Contact" onClick={goToContact} sx={{ color: value === 1 ? theme.palette.text.light : '#ffffff' }} />
+                    {/* My Apps Tab - Display only if authenticated */}
                     {isAuthenticated && (
                         <Tab label="My Apps" onClick={goToMyApps} sx={{ color: value === 2 ? theme.palette.text.light : '#ffffff' }} />
                     )}
                 </Tabs>
 
-                {/* Botones dinámicos basados en la autenticación */}
+                {/* Dynamic buttons based on authentication status */}
                 {isAuthenticated === null ? null : isAuthenticated ? (
+                    // Show Sign Out button if authenticated
                     <Button color="secondary" onClick={handleSignOut} variant="outlined">Sign Out</Button>
                 ) : (
+                    // Show Sign In and Sign Up buttons if not authenticated
                     <>
                         <Button href="/signIn" color="secondary" sx={{ mr: 1, whiteSpace: "nowrap" }} variant="outlined">Sign In</Button>
                         <Button href="/signUp" color="secondary" sx={{ whiteSpace: "nowrap" }} variant="contained">Sign Up</Button>
