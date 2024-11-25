@@ -6,41 +6,60 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { useRouter } from "next/navigation"; 
 import { userAgentFromString } from 'next/server';
+import axios from 'axios';
 
 const SignIn = ({ onSignIn }) => { // Receive onSignIn as a prop
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
 
+    const FetchUsers = async () => {
+        var id = 0;
+        try {
+            const response = await axios.get('http://127.0.0.1:5000/api/v1/users/login', {
+                params: {
+                    email: email,
+                    password: password
+                }
+            });
+            id = response.data.id;
+        } catch (e) {
+            switch (e.response.status) {
+                case 401:
+                case 402:
+                    alert('Invalid credentials');
+                    break;
+                case 403:
+                    alert('Wrong password or email');
+                    break;
+                case 404:
+                    alert('User not found');
+                    break;
+                default:
+                    console.log(e.response.data);
+                    break;
+            }
+            return;
+        }
+        // Set local storage
+        localStorage.setItem('user', email);
+        localStorage.setItem('userID', id);
+        localStorage.setItem('isAuthenticated', 'true');
+        // Redirect to home page
+        router.push("/");
+    };
+
+
     const handleSubmit = (e) => {
         // Prevent the default form submission behavior
         e.preventDefault();
 
-        /*---------------------SIGN IN LOGIC--------------------------*/
-
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-
-        const foundUser = users.find(u => u.emailU === email && u.passwordU === password);
-
-
-        if (foundUser) {
-            localStorage.setItem("isAuthenticated", "true");
-            window.dispatchEvent(new Event("storage"));
-            router.push("/");
-        } else {
-            alert("Incorrect username or password :(. Please, try again.");
-        }    
-    
-    /*-----------------------------------------------------------*/
- 
+        FetchUsers();
     }
 
     const handleSU = () => {
         router.push("/signUp");
-    };
-
-
-    
+    };    
 
     return (
         <Box
