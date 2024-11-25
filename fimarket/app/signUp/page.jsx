@@ -44,9 +44,10 @@ const SignUp = ({ onSignUp }) => {
   const router = useRouter(); //function to redirect "Don't have an account? Sign Up" 
   
   const passwordRequirements = [
-    { text: "At least one uppercase letter", regex: /[A-Z]/ }, 
     { text: "Minimum of 8 characters", regex: /.{8,}/ }, 
-    { text: "At least one special character", regex: /[!@#$%^&*(),.?":{}|<>]/ },
+    { text: "At least one uppercase letter", regex: /[A-Z]/ }, 
+    { text: "At least one number", regex: /[0-9]/ }, 
+    { text: "At least one special character", regex: /[!@#$%^&*(),.?":{}|<>]/ }, 
   ];
 
   const checkRequirement = (r) => r.regex.test(password);
@@ -263,6 +264,7 @@ const SignUp = ({ onSignUp }) => {
                   margin="normal"
                   size='small'
                   sx={{
+                    mb: 0,
                     '& .MuiFormLabel-asterisk': {
                       display: 'none',
                     },
@@ -297,27 +299,38 @@ const SignUp = ({ onSignUp }) => {
                     },
                   }}
                 />
-                <List> {passwordRequirements.map((req, index) => (
+
+                <List
+                  size='sm'
+                  sx={{
+                    mb: 2,
+                  }}
+                > {
+                passwordRequirements.map((req, index) => (
                   <ListItem key={index}> 
                     <ListItemIcon sx={{ color: 'secondary.main' }}> 
                       {checkRequirement(req) ? <CheckIcon/> : null} 
                     </ListItemIcon> 
                   <ListItemText primary={<Typography color='text.light'>{req.text}</Typography>} /> 
-                  </ListItem>))} 
+                  </ListItem>))
+                } 
                 </List>
                 
 
                 <FormControlLabel
                   control={
-                    <Checkbox sx={{
-                      color: 'secondary.main',
-                      '&.Mui-checked': {
+                    <Checkbox 
+                      required
+                      sx={{
                         color: 'secondary.main',
-                      },
-                    }}/>
+                        '&.Mui-checked': {
+                          color: 'secondary.main',
+                        },
+                      }}
+                    />
                   }
                   label={
-                    <Typography variant='h6' color='text.light'>
+                    <Typography mt={3}  variant='h6' color='text.light'>
                       I agree to the Terms and conditions
                     </Typography>
                   }
@@ -328,7 +341,7 @@ const SignUp = ({ onSignUp }) => {
                   }}
                 />
 
-                <Button sx={{mt:6}} type="submit" variant='contained' color='secondary' fullWidth>
+                <Button type="submit" variant='contained' color='secondary' fullWidth>
                   Sign Up
                 </Button>
               </form>
