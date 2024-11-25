@@ -1,11 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Link } from "next/navigation"; // To move SignUp
 import { useRouter } from "next/navigation"; // To move between tabs
-
 
 //Components MUI
 import {
@@ -17,6 +16,10 @@ import {
   FormControlLabel,
   Grid,
   Grid2,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
   Paper,
   TextField,
   Typography,
@@ -30,44 +33,73 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
 import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 import TipsAndUpdatesTwoToneIcon from '@mui/icons-material/TipsAndUpdatesTwoTone';
-import { ContentCutOutlined } from '@mui/icons-material';
+import { ContentCutOutlined, Password } from '@mui/icons-material';
+import CheckIcon from '@mui/icons-material/Check';
 
+import axios from 'axios';
 
 const SignUp = ({ onSignUp }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); //function to redirect "Don't have an account? Sign Up"
-  const user = { emailU: email, passwordU: password };
+  const router = useRouter(); //function to redirect "Don't have an account? Sign Up" 
+  
+  const passwordRequirements = [
+    { text: "Minimum of 8 characters", regex: /.{8,}/ }, 
+    { text: "At least one uppercase letter", regex: /[A-Z]/ }, 
+    { text: "At least one number", regex: /[0-9]/ }, 
+    { text: "At least one special character", regex: /[!@#$%^&*(),.?":{}|<>]/ }, 
+  ];
 
+  const checkRequirement = (r) => r.regex.test(password);
+
+  const CreateUser = async () => {
+    try { const response = await axios.post('http://127.0.0.1:5000/api/v1/users', 
+      { email: email, password: password }, 
+      { headers: { 'Content-Type': 'application/json' } }); 
+      console.log('User created:', response.data);
+      // set local storage
+      localStorage.setItem('user', JSON.stringify(response.data.email));
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('userID', response.data._id);
+      // redirect to home page
+      router.push("/");
+    }
+    catch (e) {
+      if (e.response) { 
+        switch (e.response.data.error) {
+          case 'User already exists':
+            alert("This email is already registered. Please, try another.");
+            break;
+          case 'Invalid email':
+            alert("Please, enter a valid email.");
+            break;
+          case 'Validation failed: Password must be at least 8 characters long':
+            alert("Please, enter a valid password.");
+            break;
+          default:
+            console.error('Error response:', e.response); 
+            break;
+        }
+      } 
+      else if (error.request) { // The request was made but no response was received 
+          console.error('Error request:', error.request); 
+      } 
+      else { // Something happened in setting up the request that triggered an Error 
+          console.error('Error message:', error.message); 
+      } 
+    }
+  };
 
   const handleSubmit = (e) => {
     // Prevent the default form submission behavior.
     e.preventDefault();
-  
-    /*---------------------SIGN UP LOGIC--------------------------*/
-    let users = JSON.parse(localStorage.getItem('users')) || [];
 
-    users.push(user);
+    if(email === '' || password === '') {
+      return;
+    }
 
-    localStorage.setItem('users', JSON.stringify(users));
-
-    router.push("/");
-
-    console.log("Saved users on LocalStorage:", users);
-    /*-----------------------------------------------------------*/
-
-
-    // Set the authentication status to true in localStorage
-    localStorage.setItem("isAuthenticated", "true");
-     
-    // Dispatch a storage event to notify other components (like AppBarGlobal)
-    // that the authentication status has changed
-    window.dispatchEvent(new Event("storage"));
-
-    //Looks for SignUp email and password.
-    console.log("Signup email:", email, "password:", password);
-
-    };
+    CreateUser();
+  };
 
 
 
@@ -232,6 +264,7 @@ const SignUp = ({ onSignUp }) => {
                   margin="normal"
                   size='small'
                   sx={{
+                    mb: 0,
                     '& .MuiFormLabel-asterisk': {
                       display: 'none',
                     },
@@ -267,8 +300,48 @@ const SignUp = ({ onSignUp }) => {
                   }}
                 />
 
+                <List
+                  size='sm'
+                  sx={{
+                    mb: 2,
+                  }}
+                > {
+                passwordRequirements.map((req, index) => (
+                  <ListItem key={index}> 
+                    <ListItemIcon sx={{ color: 'secondary.main' }}> 
+                      {checkRequirement(req) ? <CheckIcon/> : null} 
+                    </ListItemIcon> 
+                  <ListItemText primary={<Typography color='text.light'>{req.text}</Typography>} /> 
+                  </ListItem>))
+                } 
+                </List>
+                
 
-                <Button sx={{mt:6}} type="submit" variant='contained' color='secondary' fullWidth>
+                <FormControlLabel
+                  control={
+                    <Checkbox 
+                      required
+                      sx={{
+                        color: 'secondary.main',
+                        '&.Mui-checked': {
+                          color: 'secondary.main',
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography mt={3}  variant='h6' color='text.light'>
+                      I agree to the Terms and conditions
+                    </Typography>
+                  }
+                  sx={{
+                    '& .MuiTypography-body1': {
+                      color: 'text.light',
+                    },
+                  }}
+                />
+
+                <Button type="submit" variant='contained' color='secondary' fullWidth>
                   Sign Up
                 </Button>
               </form>
@@ -284,6 +357,6 @@ const SignUp = ({ onSignUp }) => {
       </Container>
     </Box>
   );
-}
+};
 
 export default SignUp;

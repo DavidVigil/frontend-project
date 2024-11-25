@@ -9,7 +9,7 @@ import { theme } from "../styles/global-theme";
 export default function AppBarGlobal() {
     const router = useRouter(); // Instantiating my class for the routes
     const [value, setValue] = useState(false); // State to track active tab, default is false for "Home"
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // To know if I'm in or out of my account
+    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated")); // To know if I'm in or out of my account
 
     useEffect(() => {
         // Function to handle changes in the authentication status stored in localStorage
