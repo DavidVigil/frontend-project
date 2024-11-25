@@ -23,6 +23,12 @@ const SignIn = ({ onSignIn }) => { // Receive onSignIn as a prop
                 }
             });
             id = response.data.id;
+            // Set local storage
+            localStorage.setItem('user', email);
+            localStorage.setItem('userID', id);
+            localStorage.setItem('isAuthenticated', 'true');
+            // Redirect to home page
+            router.push("/");
         } catch (e) {
             switch (e.response.status) {
                 case 401:
@@ -39,14 +45,7 @@ const SignIn = ({ onSignIn }) => { // Receive onSignIn as a prop
                     console.log(e.response.data);
                     break;
             }
-            return;
         }
-        // Set local storage
-        localStorage.setItem('user', email);
-        localStorage.setItem('userID', id);
-        localStorage.setItem('isAuthenticated', 'true');
-        // Redirect to home page
-        router.push("/");
     };
 
 
