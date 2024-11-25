@@ -91,11 +91,11 @@ const SavedPage = () => {
                         onClick={handleOpen}
                         sx={{ ":hover": { backgroundColor: "secondary.main", color: "primary.main" } }}
                     >
-                        Añadir App
+                        Add App
                     </Button>
                     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
                         <DialogTitle sx={{ backgroundColor: "primary.main", color: "white", textAlign: 'center' }}>
-                            Formulario para Subir App
+                            App Upload Form
                         </DialogTitle>
                         <DialogContent sx={{ backgroundColor: "main", color: "white" }}>
                             <Box
@@ -106,7 +106,7 @@ const SavedPage = () => {
                             >
                                 <TextField
                                     fullWidth
-                                    label="Nombre de la App"
+                                    label="App Name"
                                     value={appName}
                                     onChange={(e) => setAppName(e.target.value)}
                                     margin="normal"
@@ -124,7 +124,7 @@ const SavedPage = () => {
                                 />
                                 <TextField
                                     fullWidth
-                                    label="Descripción"
+                                    label="Description"
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                     margin="normal"
@@ -135,7 +135,7 @@ const SavedPage = () => {
                                 />
                                 <TextField
                                     fullWidth
-                                    label="URL de la App"
+                                    label="App URL"
                                     value={url}
                                     onChange={(e) => setUrl(e.target.value)}
                                     margin="normal"
@@ -163,7 +163,7 @@ const SavedPage = () => {
                                         onClick={handleSaveApp}
                                         sx={{ backgroundColor: "primary.main", color: "white", ":hover": { backgroundColor: "secondary.main", color: "primary.main" } }}
                                     >
-                                        Añadir
+                                        Add
                                     </Button>
                                 </Grid>
                                 <Grid item xs={6}>
@@ -174,7 +174,7 @@ const SavedPage = () => {
                                         onClick={handleClose}
                                         sx={{ color: "white", ":hover": { backgroundColor: "secondary.main", color: "primary.main" } }}
                                     >
-                                        Cancelar
+                                        Cancel
                                     </Button>
                                 </Grid>
                             </Grid>
