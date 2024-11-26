@@ -1,16 +1,69 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, List, ListItem, ListItemAvatar, ListItemText, Avatar, Link, Dialog, DialogTitle, DialogContent, DialogActions, Typography, Grid2, Tooltip,IconButton } from '@mui/material'; // Importing Grid2 correctly
 import FileDownloadTwoToneIcon from '@mui/icons-material/FileDownloadTwoTone';
+import axios from 'axios';
 
-
-
-const AppList = ({ filterType, searchTerm, userApps = [], setUserApps, sortingApps, appDef }) => { // Default value for userApps and new props
+const AppList = ({ filterType, searchTerm, sortingApps }) => { // Default value for userApps and new props
     const [saveDialogOpen, setSaveDialogOpen] = useState(false);
-    const [open, setOpen] = React.useState(false);
+    
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const handleClickDialog = ( ) => { 
+    useEffect(() => {
+        handleStorageChange();
+    });
 
+    const get_usr_apps = async () => {
+        try {
+            const userID = localStorage.getItem('userID');
+            if (!userID) {
+                throw new Error('User ID is not available in localStorage');
+            }
+
+            const response = await axios.get('http://127.0.0.1:8000/api/v1/users/like', {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                params: {
+                    "user_id": userID,
+                },
+            });
+            const result = await response.data;
+            return result;
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const [userApps, setUserApps] = useState([]);
+
+    const like_app = async (app) => {
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/v1/users/like',
+                {
+                    "user_id": localStorage.getItem('userID'),
+                    "app_id": app._id,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            if(response.status === 200){
+                alert('App saved successfully');
+            }else{
+                alert('Already saved');
+            }
+        } catch (e) {
+            switch (e.response.status) {
+                case 505:
+                    alert('Failed to save app: User already saved this app');
+                    break;
+                default:
+                    console.error(e);
+                    break;
+            }
+        }
     };
 
     const handleStorageChange = () => {
@@ -24,22 +77,45 @@ const AppList = ({ filterType, searchTerm, userApps = [], setUserApps, sortingAp
         handleStorageChange();
         if (!isAuthenticated) {
             setSaveDialogOpen(true);
-        } else {
-            // Check if the app is already saved
-            if (!isAppSaved(app)) {
-                const updatedUserApps = [...userApps, app];
-                setUserApps(updatedUserApps);
-                localStorage.setItem("userApps", JSON.stringify(updatedUserApps)); // Save to localStorage
+            return;
+        }
+        setUserApps([]);
+        // Check if the app is already saved
+        if (!isAppSaved(app)) {
+            like_app(app) // Save it
+        }else{
+            alert('App already saved');
+        }  
+    };
+
+    const handleClickDialog = () => {
+
+    };
+
+    const isAppSaved = (app) => {
+
+        if(userApps.length == 0){
+            get_usr_apps().then((result) => {
+                    setUserApps(result);
+                    if(result.length == 0){
+                        return false;
+                    }
+                }
+            );
+        }
+        for (let i = 0; i < userApps.length; i++) {
+            if (app._id === userApps[i]) {
+                return true;
             }
         }
+        localStorage.setItem("userApps", JSON.stringify(userApps));
+        return false;
     };
 
     const filteredApps = sortingApps.filter(app =>
         app.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
         (!filterType || filterType === 'All' || app.origin === filterType) // Filtering logic
     );
-
-    const isAppSaved = (app) => userApps.some(userApp => userApp.name === app.name);
 
     return (
         <Box sx={{ width: '100%', bgcolor: 'transparent', backdropFilter: 'blur(5px)', borderRadius: 2, p: 2 }}>
@@ -69,7 +145,7 @@ const AppList = ({ filterType, searchTerm, userApps = [], setUserApps, sortingAp
                                     }} 
                                 >
                                     <ListItemText 
-                                        primary={app.title} 
+                                        primary={app.name} 
                                         secondary={`${app.info} - ${app.description}`} 
                                         primaryTypographyProps={{      
                                             fontWeight: 'bold',      
@@ -129,7 +205,7 @@ const AppList = ({ filterType, searchTerm, userApps = [], setUserApps, sortingAp
                     backdropFilter: 'blur(5px)',
                 }}
             >
-                {isAuthenticated ? (<DialogTitle>App saved successfully!</DialogTitle>) : (<DialogTitle>Sign in to save apps</DialogTitle>)}
+                {isAuthenticated? (<DialogTitle>App saved successfully!</DialogTitle>) : (<DialogTitle>Sign in to save apps</DialogTitle>)}
             </Dialog>
         </Box>
     );

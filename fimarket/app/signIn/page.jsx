@@ -22,7 +22,7 @@ const SignIn = ({ onSignIn }) => { // Receive onSignIn as a prop
                     password: password
                 }
             });
-            id = response.data.id;
+            id = response.data._id;
             // Set local storage
             localStorage.setItem('user', email);
             localStorage.setItem('userID', id);

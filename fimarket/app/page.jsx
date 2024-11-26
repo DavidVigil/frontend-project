@@ -15,10 +15,10 @@ const Page = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userApps, setUserApps] = useState([]);
   const [allApps, setAllApps] = useState([]);
+  
   const FetchApps = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8001/api/v1/apps');
-      console.log(response.data);
       setAllApps(response.data);
     } catch (e) {
         switch (e.response.status) {
@@ -31,20 +31,14 @@ const Page = () => {
         }
     }
   };
+
   const handleFilterOption = (source) => {
     setFilterSource(source);
   };
+
   useEffect(() => {
     FetchApps();
   }, []);
-  const appDefinition = {
-    title: '',
-    info: '',
-    description: '',
-    logo: '',
-    url: '',
-    source: ''
-  };
 
   return (
     <Container maxWidth="lg">
@@ -99,10 +93,7 @@ const Page = () => {
               searchTerm={searchTerm}
               filterType={filterType}
               isAuthenticated={isAuthenticated}
-              userApps={userApps}
-              setUserApps={setUserApps}
               sortingApps={allApps}
-              appDef={appDefinition}
             />
           </Box>
         </Container>
