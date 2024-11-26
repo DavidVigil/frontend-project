@@ -4,16 +4,80 @@ import React, { useState, useEffect } from 'react';
 import { Box, Container, Typography, Button, Dialog, DialogContent, DialogActions, DialogTitle, TextField, Grid } from '@mui/material';
 import SavedAppsList from '../components/SavedAppsList.jsx';
 import BackgroundContainer from '../components/BackgroundContainer.jsx';
+import AppList from '../components/AppList.jsx';
+import axios, { formToJSON } from 'axios';
+import { headers } from 'next/headers.js';
 
 const SavedPage = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userApps, setUserApps] = useState([]);
     const [open, setOpen] = useState(false);
+    
     const [appName, setAppName] = useState("");
     const [info, setInfo] = useState("");
     const [description, setDescription] = useState("");
     const [url, setUrl] = useState("");
-    const [logo, setLogo] = useState("");
+    const [logo_url, setLogo_url] = useState("");
+    const [origin, setOrigin] = useState("");
+    
+    const [allApps, setAllApps] = useState([]);
+
+    const FetchApps = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:8001/api/v1/apps');
+            setAllApps(response.data);
+        } catch (e) {
+            if (e.response) {
+                switch (e.response.status) {
+                    case 500:
+                        alert('Failed to fetch apps');
+                        break;
+                    default:
+                        console.log(e.response.data);
+                        break;
+                }
+            } else {
+                console.error('Error:', e.message);
+            }
+        }
+    };
+
+    const addApp = async (app) => {
+        try {
+            const author = localStorage.getItem('userID');
+            if (!author) {
+                throw new Error('User ID is not available in localStorage');
+            }
+
+            app.author = author;
+
+            const response = await axios.post('http://127.0.0.1:8001/api/v1/apps',
+                {
+                    "author": app.author,
+                    "description": app.description,
+                    "info": app.info,
+                    "logo_url": app.logo_url,
+                    "name": app.name,
+                    "origin": app.origin,
+                    "url": app.url
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            if(response.status === 201){
+                alert('App saved successfully');
+                FetchApps();
+            }else{
+                alert(response.status);
+            }
+        }catch (e) {
+            console.error('Error:', e.message);
+        }
+    };        
+
 
     useEffect(() => {
         // Check initial authentication status
@@ -35,6 +99,8 @@ const SavedPage = () => {
 
         window.addEventListener("storage", handleStorageChange);
 
+        FetchApps();
+
         return () => {
             window.removeEventListener("storage", handleStorageChange);
         };
@@ -53,17 +119,17 @@ const SavedPage = () => {
 
     const handleSaveApp = () => {
         const newApp = {
-            title: appName,
+            name: appName,
             info: info,
             description: description,
             url: url,
-            logo: logo
+            logo_url: logo_url,
+            origin: origin,
         };
 
-        const updatedApps = [...userApps, newApp];
-        setUserApps(updatedApps);
-        localStorage.setItem("userApps", JSON.stringify(updatedApps));
+        addApp(newApp);
 
+        FetchApps();
         handleClose();
     };
 
@@ -72,7 +138,7 @@ const SavedPage = () => {
         setInfo("");
         setDescription("");
         setUrl("");
-        setLogo("");
+        setLogo_url("");
     };
 
 
@@ -145,8 +211,17 @@ const SavedPage = () => {
                                 <TextField
                                     fullWidth
                                     label="Logo URL"
-                                    value={logo}
-                                    onChange={(e) => setLogo(e.target.value)}
+                                    value={logo_url}
+                                    onChange={(e) => setLogo_url(e.target.value)}
+                                    margin="normal"
+                                    InputLabelProps={{ style: { color: "black" } }}
+                                    InputProps={{ style: { color: "black" } }}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Origin"
+                                    value={origin}
+                                    onChange={(e) => setOrigin(e.target.value)}
                                     margin="normal"
                                     InputLabelProps={{ style: { color: "black" } }}
                                     InputProps={{ style: { color: "black" } }}
@@ -186,7 +261,10 @@ const SavedPage = () => {
                         backgroundColor: 'primary.main', 
                         padding: 2,
                     }}>
-                    <SavedAppsList userApps={userApps} handleDelete={handleDelete} />
+                    <AppList 
+                        apps={allApps}
+                        sortingType='created'
+                    />
 
                     </Box>
                     
@@ -204,7 +282,10 @@ const SavedPage = () => {
                         backgroundColor: 'primary.main', 
                         padding: 2, 
                     }}>
-                        <SavedAppsList userApps={userApps} handleDelete={handleDelete}/>
+                        <AppList
+                            apps={allApps}
+                            sortingType='liked'
+                        />
                     </Box>
                 </Container>
             </BackgroundContainer>
