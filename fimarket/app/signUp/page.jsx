@@ -53,7 +53,7 @@ const SignUp = ({ onSignUp }) => {
   const checkRequirement = (r) => r.regex.test(password);
 
   const CreateUser = async () => {
-    try { const response = await axios.post('http://127.0.0.1:5000/api/v1/users', 
+    try { const response = await axios.post('http://127.0.0.1:8000/api/v1/users', 
       { email: email, password: password }, 
       { headers: { 'Content-Type': 'application/json' } }); 
       console.log('User created:', response.data);

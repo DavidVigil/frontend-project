@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import AppList from './components/AppList';
 import SearchBar from './components/SearchBar';
-import { allApps } from './data/apps';
-import { theme } from './styles/global-theme';
-
+//import { allApps } from './data/apps';
+import axios from 'axios';
 
 const Page = () => {
   // BackgroundAvatars.jsx
@@ -15,11 +14,29 @@ const Page = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userApps, setUserApps] = useState([]);
-  
+  const [allApps, setAllApps] = useState([]);
+  const FetchApps = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8001/api/v1/apps');
+      console.log(response.data);
+      setAllApps(response.data);
+    } catch (e) {
+        switch (e.response.status) {
+            case 500:
+                alert('Failed to fetch apps');
+                break;
+            default:
+                console.log(e.response.data);
+                break;
+        }
+    }
+  };
   const handleFilterOption = (source) => {
     setFilterSource(source);
   };
-
+  useEffect(() => {
+    FetchApps();
+  }, []);
   const appDefinition = {
     title: '',
     info: '',
