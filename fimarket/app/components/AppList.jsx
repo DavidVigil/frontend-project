@@ -73,44 +73,83 @@ const AppList = ({ filterType, searchTerm = '', apps, sortingType = '' }) => { /
         setIsAuthenticated(authStatus);
     };
 
-    const handleSaveClick = (app) => {
-        handleStorageChange();
-        if (!isAuthenticated) {
-            setSaveDialogOpen(true);
-            return;
+    const validateAppData = (appData) => {
+        const requiredFields = ['name', 'info', 'description', 'url', 'logo_url', 'origin', 'author'];
+        for (const field of requiredFields) {
+            if (!appData[field]) {
+                alert(`Field ${field} is required`);
+                return false;
+            }
         }
-        setUserApps([]);
-        // Check if the app is already saved
-        if (!isAppSaved(app)) {
-            like_app(app) // Save it
-        }else{
-            alert('App already saved');
-        }  
+        return true;
     };
+    
+
+    const handleSaveClick = async (app) => {
+        const appData = {
+            name: app.name,              // Nombre de la app
+            info: app.info,              // Información de la app
+            description: app.description, // Descripción de la app
+            url: app.url,                // URL de la app
+            logo_url: app.logo_url,      // Logo URL de la app
+            origin: app.origin,          // Origen de la app
+            author: localStorage.getItem('userID') // Autor: ID del usuario autenticado
+        };
+    
+        // Validar datos antes de enviarlos
+        if (!validateAppData(appData)) {
+            return; // Detener si faltan datos
+        }
+    
+        try {
+            const response = await axios.post(
+                'http://127.0.0.1:8000/api/v1/apps',
+                appData,
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+    
+            if (response.status === 201) {
+                alert('App successfully saved!');
+            } else {
+                console.error('Unexpected status code:', response.status);
+            }
+        } catch (e) {
+            if (e.response && e.response.status === 400) {
+                alert(`Validation error: ${e.response.data.error}`);
+            } else {
+                console.error('Error saving app:', e);
+            }
+        }
+    };
+    
+    
 
     const handleClickDialog = () => {
 
     };
 
-    const isAppSaved = (app) => {
-
-        if(userApps.length == 0){
-            get_usr_apps().then((result) => {
+    const isAppSaved = async (app) => {
+        try {
+            if (userApps.length === 0) {
+                const result = await get_usr_apps();
+                if (result && result.length > 0) {
                     setUserApps(result);
-                    if(result.length == 0){
-                        return false;
-                    }
+                } else {
+                    return false; // Retorna falso si no hay apps guardadas
                 }
-            );
-        }
-        for (let i = 0; i < userApps.length; i++) {
-            if (app._id === userApps[i]) {
-                return true;
             }
+    
+            return userApps.some(userApp => app._id === userApp); // Usa `some` para verificar si existe en el array
+        } catch (e) {
+            console.error("Error checking if app is saved:", e);
+            return false; // Retorna falso si ocurre un error
         }
-        localStorage.setItem("userApps", JSON.stringify(userApps));
-        return false;
     };
+    
 
     const filteredApps = apps.filter(app => {
         // Verifica si el nombre de la aplicación incluye el término de búsqueda
