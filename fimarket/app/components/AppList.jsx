@@ -35,11 +35,11 @@ const AppList = ({ filterType, searchTerm, userApps = [], setUserApps, sortingAp
     };
 
     const filteredApps = sortingApps.filter(app =>
-        app.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (!filterType || filterType === 'All' || app.source === filterType) // Filtering logic
+        app.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (!filterType || filterType === 'All' || app.origin === filterType) // Filtering logic
     );
 
-    const isAppSaved = (app) => userApps.some(userApp => userApp.title === app.title);
+    const isAppSaved = (app) => userApps.some(userApp => userApp.name === app.name);
 
     return (
         <Box sx={{ width: '100%', bgcolor: 'transparent', backdropFilter: 'blur(5px)', borderRadius: 2, p: 2 }}>
@@ -59,7 +59,7 @@ const AppList = ({ filterType, searchTerm, userApps = [], setUserApps, sortingAp
                             <Grid2 container spacing={2} alignItems="center"> {/* Using Grid2 from @mui/material */}                                
                                 <Grid2 xs={12} sm={2}> {/* Correctly using Grid2's item property */}
                                     <ListItemAvatar>
-                                        <Avatar src={app.logo} sx={{ width: { xs: 40, sm: 60 }, height: { xs: 40, sm: 60 } }} />
+                                        <Avatar src={app.logo_url} sx={{ width: { xs: 40, sm: 60 }, height: { xs: 40, sm: 60 } }} />
                                     </ListItemAvatar>
                                 </Grid2>
                                 <Grid2 sx={{
