@@ -74,8 +74,18 @@ const SavedPage = () => {
                 alert(response.status);
             }
         }catch (e) {
-            console.error('Error:', e.message);
+            if (e.response) {
+                console.error('Response Error:', e.response.status, e.response.data);
+                if (e.response.status === 400) {
+                    alert(`Validation error: ${e.response.data.error}`);
+                }
+            } else if (e.request) {
+                console.error('Request Error:', e.request);
+            } else {
+                console.error('Error:', e.message);
+            }
         }
+        
     };        
 
 
