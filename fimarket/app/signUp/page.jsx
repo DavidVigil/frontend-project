@@ -65,28 +65,23 @@ const SignUp = ({ onSignUp }) => {
       router.push("/");
     }
     catch (e) {
-      if (e.response) { 
-        switch (e.response.data.error) {
-          case 'User already exists':
-            alert("This email is already registered. Please, try another.");
+      switch (e.response.status) {
+        case 401:
+        case 402:
+            alert('Invalid credentials');
             break;
-          case 'Invalid email':
-            alert("Please, enter a valid email.");
+        case 403:
+            alert('User already exists');
             break;
-          case 'Validation failed: Password must be at least 8 characters long':
-            alert("Please, enter a valid password.");
+        case 404:
+            alert('User not found');
             break;
-          default:
-            console.error('Error response:', e.response); 
+        case 501:
+            alert('Server error');
+        default:
+            console.log(e.response.data);
             break;
-        }
-      } 
-      else if (error.request) { // The request was made but no response was received 
-          console.error('Error request:', error.request); 
-      } 
-      else { // Something happened in setting up the request that triggered an Error 
-          console.error('Error message:', error.message); 
-      } 
+       } 
     }
   };
 

@@ -1,125 +1,136 @@
 "use client";
 
-import { AppBar, Box, Button, Tab, Tabs, Toolbar, Typography } from "@mui/material"; // Components from material UI
-import Image from "next/image"; // Image component from next
-import { useRouter } from "next/navigation"; // To move between tabs
-import { useEffect, useState } from "react"; // To manage states
+// Import necessary components from Material UI and other libraries
+import { AppBar, Box, Button, Tab, Tabs, Toolbar, Typography } from "@mui/material";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { theme } from "../styles/global-theme";
 
 export default function AppBarGlobal() {
-    const router = useRouter(); // Instantiating my class for the routes
-    const [value, setValue] = useState(false); // State to track active tab, default is false for "Home"
-    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated")); // To know if I'm in or out of my account
+    const router = useRouter();
+    const [value, setValue] = useState(false);  // State for tab selection (default: false)
+    const [isAuthenticated, setIsAuthenticated] = useState(null);  // State for authentication status (null initially)
+
+    // Function to update authentication status based on localStorage value
+    const updateAuthStatus = () => {
+        const authStatus = localStorage.getItem("isAuthenticated") === "true"; // Check if user is authenticated in localStorage
+        setIsAuthenticated(authStatus); // Set authentication status
+    };
 
     useEffect(() => {
-        // Function to handle changes in the authentication status stored in localStorage
-        const handleStorageChange = () => {
-            // Check if the user is authenticated based on the localStorage value
-            const authStatus = localStorage.getItem("isAuthenticated") === "true";
-            // Update the local state with the authentication status
-            setIsAuthenticated(authStatus);
+        // ** Initialize authentication status from localStorage **
+        updateAuthStatus();
+
+        // ** Check authentication status every second **
+        const intervalId = setInterval(updateAuthStatus, 1000); // Update authentication status at intervals
+
+        // Cleanup: clear interval when the component is unmounted
+        return () => {
+            clearInterval(intervalId); // Clears the interval to avoid memory leaks
         };
+    }, []); // Empty dependency array ensures this runs once when the component mounts
 
-        // Listen for any changes in the storage (e.g., when authentication status is updated)
-        window.addEventListener("storage", handleStorageChange);
-
-        // Cleanup function to remove the event listener when the component unmounts
-        return () => window.removeEventListener("storage", handleStorageChange);
-    }, []);
-
-    const handleChange = (newValue) => { // Function to handle changes (clicks on tabs)
-        setValue(newValue);
+    // Handle tab change and update the selected value
+    const handleChange = (newValue) => {
+        setValue(newValue); // Update the selected tab
     };
 
-    const goToHome = () => { // To go to the home page
-        setValue(false); // To remove the highlight
-        router.push("/");
+    // Navigation functions for each tab
+    const goToHome = () => {
+        setValue(false); // Reset tab value for home
+        router.push("/"); // Navigate to home page
     };
 
-    const goToAbout = () => { // To go to the about page
-        setValue(0); // To highlight this tab
-        router.push("/about");
-    };
-    
-    const goToContact = () => { // To go to the contact page
-        setValue(1); // To highlight this tab
-        router.push("/contact");
-    };
-    
-    const goToMyApps = () => { // To go to my apps page
-        setValue(2); // To highlight this tab
-        router.push("/myApps");
+    const goToAbout = () => {
+        setValue(0); // Set tab value for About
+        router.push("/about"); // Navigate to About page
     };
 
-    const handleSignOut = () => { // Function to exit the session when you are inside 
-        setIsAuthenticated(false);
-        localStorage.setItem("isAuthenticated", "false"); // Update localStorage to reflect sign out
-        setValue(false); // To remove the highlight
-        router.push("/"); // To return to the home page
+    const goToContact = () => {
+        setValue(1); // Set tab value for Contact
+        router.push("/contact"); // Navigate to Contact page
+    };
+
+    const goToMyApps = () => {
+        setValue(2); // Set tab value for My Apps
+        router.push("/myApps"); // Navigate to My Apps page
+    };
+
+    // Handle sign out process
+    const handleSignOut = () => {
+        setIsAuthenticated(false); // Update authentication status
+        localStorage.setItem("isAuthenticated", "false"); // Update localStorage
+        setValue(false); // Reset tab value
+        router.push("/"); // Redirect to home page
     };
 
     return (
         <AppBar
-            position="static" // It doesn't stay visible when scrolling 
+            position="static"
             sx={{
-                color: "secondary", // White
-                minHeight: "64px", // To maintain the height of the bar on all screens
-                mb: 5 // Space at the bottom
+                color: "secondary", // Set text color for the AppBar
+                minHeight: "64px", // Set minimum height for the AppBar
+                mb: 5, // Margin bottom for spacing
             }}
         >
-            <Toolbar sx={{ minHeight: "64px" }}> {/* Ensures consistent height */}
+            <Toolbar sx={{ minHeight: "64px" }}>
                 <Box
-                    sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={goToHome} >
+                    sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+                    onClick={goToHome} // Navigate to home page when clicked
+                >
                     <Image
-                        src="/logo.png"
+                        src="/logo.png" // Logo image source
                         alt="FI Marketplace"
                         width={40}
-                        height={40}
+                        height={40} // Logo dimensions
                     />
                     <Typography
                         variant="h5"
                         sx={{
-                            ml: 2, // Space to the left
-                            mr: 3, // Space to the right
-                            display: { xs: "none", md: "block" }, // Hide on xs, show on sm and up
-                            whiteSpace: "nowrap" // Prevents line break
+                            ml: 2, // Margin left
+                            mr: 3, // Margin right
+                            display: { xs: "none", md: "block" }, // Hide on small screens, show on medium and large
+                            whiteSpace: "nowrap", // Prevent text from wrapping
                         }}
                     >
                         FI Marketplace
                     </Typography>
                 </Box>
 
+                {/* Tabs for navigation */}
                 <Tabs
-                    value={value} // Initial state
-                    onChange={(_, newValue) => handleChange(newValue)} // To manage the clicks on the tabs
-                    textColor="inherit" // Inherits the color of the parent
+                    value={value} // Controlled value for the selected tab
+                    onChange={(_, newValue) => handleChange(newValue)} // Update tab selection
+                    textColor="inherit" // Inherit text color
                     sx={{
-                        flexGrow: 1, // To push the following sign buttons to the right
+                        flexGrow: 1, // Allow Tabs to take up remaining space
                         "& .MuiTabs-indicator": {
-                            backgroundColor: value === false ? "transparent" : theme.palette.secondary.main // Yellow highlight unless on Home
-                        }
+                            backgroundColor: value === false ? "transparent" : theme.palette.secondary.main, // Tab indicator color
+                        },
                     }}
                 >
-                    {/* Changes the color of the letters if the tab is selected or not */}
+                    {/* About Tab */}
                     <Tab label="About" onClick={goToAbout} sx={{ color: value === 0 ? theme.palette.text.light : '#ffffff' }} />
-                    <Tab label="Contact" onClick={goToContact} sx={{ color: value === 2 ? theme.palette.text.light : '#ffffff' }} />
+                    {/* Contact Tab */}
+                    <Tab label="Contact" onClick={goToContact} sx={{ color: value === 1 ? theme.palette.text.light : '#ffffff' }} />
+                    {/* My Apps Tab - Display only if authenticated */}
                     {isAuthenticated && (
-                        <Tab label="My Apps" onClick={goToMyApps} sx={{ color: value === 1 ? theme.palette.text.light : '#ffffff' }} />
+                        <Tab label="My Apps" onClick={goToMyApps} sx={{ color: value === 2 ? theme.palette.text.light : '#ffffff' }} />
                     )}
                 </Tabs>
 
-                {isAuthenticated ? // Are we in or out?
-                    (<Button color="secondary" onClick={handleSignOut} variant="outlined">Sign Out</Button>) // If we're in
-                    :
-                    // If we're out:
-                    (
-                        <>
-                            <Button href="/signIn" color="secondary" sx={{ mr: 1, whiteSpace: "nowrap" }} variant="outlined">Sign In</Button>
-                            <Button href="/signUp" color="secondary" sx={{ whiteSpace: "nowrap" }} variant="contained">Sign Up</Button>
-                        </>
-                    )
-                }
-
+                {/* Dynamic buttons based on authentication status */}
+                {isAuthenticated === null ? null : isAuthenticated ? (
+                    // Show Sign Out button if authenticated
+                    <Button color="secondary" onClick={handleSignOut} variant="outlined">Sign Out</Button>
+                ) : (
+                    // Show Sign In and Sign Up buttons if not authenticated
+                    <>
+                        <Button href="/signIn" color="secondary" sx={{ mr: 1, whiteSpace: "nowrap" }} variant="outlined">Sign In</Button>
+                        <Button href="/signUp" color="secondary" sx={{ whiteSpace: "nowrap" }} variant="contained">Sign Up</Button>
+                    </>
+                )}
             </Toolbar>
         </AppBar>
     );
