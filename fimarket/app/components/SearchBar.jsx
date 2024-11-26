@@ -1,12 +1,16 @@
 'use client';
 import React from 'react';
+import { useState } from 'react';
 import { Grid2, Button, TextField, Box, Stack, Select, MenuItem, Menu } from '@mui/material';
 import FilterAltTwoToneIcon from '@mui/icons-material/FilterAltTwoTone';
 
-
-
-
 const SearchBar = ({ searchTerm, setSearchTerm, setFilterType }) => {
+    const [filter, setFilter] = useState('');
+
+    const HandleFilter = (filter) => {
+        setFilter(filter.toUpperCase());
+        setFilterType(filter);
+    }
 
     return (
         <Box>
@@ -63,14 +67,16 @@ const SearchBar = ({ searchTerm, setSearchTerm, setFilterType }) => {
                     displayEmpty
                     inputProps={{'aria-label': 'Without label'}}
                     startAdornment={<FilterAltTwoToneIcon sx={{ marginRight: 1 }} />}
-
+                    defaultValue='ALL'
+                    value={filter}
                     sx={{ 
                         bgcolor: 'primary.main', 
                         color: 'text.light', 
                     }}
                 >    
                     <MenuItem
-                        onClick={() => setFilterType('All')}
+                        value="ALL"
+                        onClick={() => HandleFilter('All')}
                         sx={{
                             color: 'text.dark',
                         }}
@@ -78,7 +84,8 @@ const SearchBar = ({ searchTerm, setSearchTerm, setFilterType }) => {
                         ALL
                     </MenuItem>
                     <MenuItem
-                        onClick={() => setFilterType('FI')}
+                        value="FI"
+                        onClick={() => HandleFilter('FI')}
                         sx={{
                             color: 'text.dark',
                         }}
@@ -86,7 +93,8 @@ const SearchBar = ({ searchTerm, setSearchTerm, setFilterType }) => {
                         FI
                     </MenuItem>
                     <MenuItem
-                        onClick={() => setFilterType('Extern')}
+                        value="EXTERN"
+                        onClick={() => HandleFilter('Extern')}
                         sx={{
                             color: 'text.dark',
                         }}

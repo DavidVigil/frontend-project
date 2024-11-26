@@ -80,7 +80,7 @@ const Page = () => {
         <Container maxWidth="md" sx={{ pt: 4 }}>
           <SearchBar 
             searchTerm={searchTerm} 
-            setSearchTerm={setSearchTerm} 
+            setSearchTerm={setSearchTerm}
             setFilterType={setFilterType}
           />
           <Box sx={{
@@ -93,7 +93,8 @@ const Page = () => {
               searchTerm={searchTerm}
               filterType={filterType}
               isAuthenticated={isAuthenticated}
-              sortingApps={allApps}
+              apps={allApps}
+              sortingType='' // it can be '', 'liked', 'created'
             />
           </Box>
         </Container>
