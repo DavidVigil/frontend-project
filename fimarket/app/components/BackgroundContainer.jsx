@@ -11,14 +11,14 @@ const BackgroundContainer = ({ children }) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        background: 'rgba(0, 0, 0, 0.5)'
+        background: 'secondary.main'
       }}
     >
       <BackgroundAvatars />
       <Container
         maxWidth="md"
         sx={{
-          bgcolor: 'rgba(0, 0, 0, 0.5)',
+          bgcolor: 'secondary.main',
           backdropFilter: 'blur(5px)',
           borderRadius: 2,
           height: '100%',
