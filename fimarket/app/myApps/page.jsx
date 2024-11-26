@@ -81,7 +81,7 @@ const SavedPage = () => {
             <BackgroundContainer>
                 <Container maxWidth="md" sx={{ pt: 4 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <Typography variant="h1" sx={{ color: 'text.h1', marginBottom: 2 }}>
+                        <Typography variant="h1" sx={{ color: 'text.dark', marginBottom: 2 }}>
                             My Apps
                         </Typography>
                     </Box>
@@ -194,7 +194,7 @@ const SavedPage = () => {
                 
                 <Container maxWidth="md" sx={{ pt: 4 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <Typography variant="h1" sx={{ color: 'text.h1', marginBottom: 2 }}>
+                        <Typography variant="h1" sx={{ color: 'text.dark', marginBottom: 2 }}>
                             Favorites Apps
                         </Typography>
                     </Box>
@@ -204,7 +204,7 @@ const SavedPage = () => {
                         backgroundColor: 'primary.main', 
                         padding: 2, 
                     }}>
-                        <SavedAppsList userApps={userApps} />
+                        <SavedAppsList userApps={userApps} handleDelete={handleDelete}/>
                     </Box>
                 </Container>
             </BackgroundContainer>
